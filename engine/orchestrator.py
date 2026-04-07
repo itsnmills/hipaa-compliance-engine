@@ -15,6 +15,7 @@ from engine.models import (
     ControlDefinition,
 )
 from controls.registry import ControlRegistry
+from engine.audit_trail import FileAccessTracker
 from scoring.freshness import (
     compute_control_status, build_compliance_report,
 )
@@ -223,6 +224,10 @@ class CheckHistory:
     def _load(self) -> dict:
         """Load history from disk."""
         if self._history_file.exists():
+            FileAccessTracker.instance().record(
+                str(self._history_file), "read", "CheckHistory",
+                "Previous check results",
+            )
             try:
                 with open(self._history_file, "r") as f:
                     return json.load(f)
@@ -233,6 +238,10 @@ class CheckHistory:
     def _save(self) -> None:
         """Persist history to disk."""
         self._data_dir.mkdir(exist_ok=True)
+        FileAccessTracker.instance().record(
+            str(self._history_file), "write", "CheckHistory",
+            "Persist check results",
+        )
         with open(self._history_file, "w") as f:
             json.dump(self._data, f, indent=2)
 

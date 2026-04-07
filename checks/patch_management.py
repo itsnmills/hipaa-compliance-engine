@@ -14,12 +14,15 @@ class PatchManagementCheck(BaseCheck):
     def execute(self, control_id: str, method: str) -> CheckResult:
         if self.demo:
             return self._demo_check(control_id, method)
-        return self._make_result(
-            control_id=control_id,
-            status=CheckStatus.ERROR.value,
-            score=0.0,
-            details="Live patch check requires patch management system configuration",
-        )
+        return self._live_check(control_id, method)
+
+    def _live_check(self, control_id: str, method: str) -> CheckResult:
+        """Live mode: load evidence from user-configured file path."""
+        data = self._load_evidence_file("patch_status")
+        if data is None:
+            return self._make_not_configured_result(control_id, "patch_status", 30)
+        return self._check_patch_compliance(control_id, data)
+
 
     def _demo_check(self, control_id: str, method: str) -> CheckResult:
         data = self._load_demo_data("patch_status.json") or {}

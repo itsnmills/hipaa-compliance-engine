@@ -14,12 +14,20 @@ class BackupRecoveryCheck(BaseCheck):
     def execute(self, control_id: str, method: str) -> CheckResult:
         if self.demo:
             return self._demo_check(control_id, method)
-        return self._make_result(
-            control_id=control_id,
-            status=CheckStatus.ERROR.value,
-            score=0.0,
-            details="Live backup check requires backup system configuration",
-        )
+        return self._live_check(control_id, method)
+
+    def _live_check(self, control_id: str, method: str) -> CheckResult:
+        """Live mode: load evidence from user-configured file path."""
+        data = self._load_evidence_file("backup_status")
+        if data is None:
+            return self._make_not_configured_result(control_id, "backup_status", 30)
+        dispatch = {
+            "check_backup_status": self._check_backup_status,
+            "check_dr_capability": self._check_dr_capability,
+        }
+        handler = dispatch.get(method, self._check_backup_status)
+        return handler(control_id, data)
+
 
     def _demo_check(self, control_id: str, method: str) -> CheckResult:
         data = self._load_demo_data("backup_status.json") or {}

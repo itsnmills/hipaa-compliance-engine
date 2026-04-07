@@ -1,0 +1,38 @@
+{
+  "_comment": "Workforce Roster Template — Staff members, training records, and termination procedures",
+  "workforce_members": [
+    {
+      "name": "Employee Name",
+      "role": "Job Title",
+      "hire_date": "YYYY-MM-DD",
+      "training_status": "current",
+      "last_training": "YYYY-MM-DD",
+      "access_level": "clinical"
+    }
+  ],
+  "termination_procedures": {
+    "documented": false,
+    "sla_1hr_capable": false,
+    "automated": false,
+    "manual_steps": [
+      "Step 1: HR notifies IT",
+      "Step 2: IT disables accounts",
+      "Step 3: Collect badge and keys"
+    ],
+    "average_termination_minutes": 0,
+    "note": ""
+  },
+  "recent_terminations": [
+    {
+      "employee": "Former Employee",
+      "date": "YYYY-MM-DD",
+      "termination_time_minutes": 0
+    }
+  ],
+  "authorization": {
+    "clearance_procedures": false,
+    "supervision_policy": false,
+    "background_checks": false,
+    "access_authorization_documented": false
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "_comment": "Network Topology Template — Document network segments, firewall rules, and lateral movement risks",
+  "segments": [
+    {
+      "name": "Clinical (VLAN 100)",
+      "vlan": 100,
+      "subnet": "10.100.1.0/24",
+      "ephi": true,
+      "hosts": ["ehr-server-01", "db-server-01"],
+      "isolation_status": "isolated"
+    },
+    {
+      "name": "Guest WiFi (VLAN 200)",
+      "vlan": 200,
+      "subnet": "10.200.1.0/24",
+      "ephi": false,
+      "hosts": [],
+      "isolation_status": "isolated"
+    }
+  ],
+  "firewall_rules": [
+    {
+      "id": "FW-001",
+      "source": "VLAN 200",
+      "destination": "VLAN 100",
+      "action": "DENY",
+      "protocol": "ANY"
+    }
+  ],
+  "lateral_movement_risks": [
+    {
+      "source_segment": "Source Segment Name",
+      "target_segment": "Target Segment Name",
+      "protocol": "SMB (TCP/445)",
+      "description": "Description of the lateral movement risk",
+      "risk_level": "High",
+      "remediation": "Steps to remediate"
+    }
+  ],
+  "segmentation_tests": [],
+  "iot_isolation_incomplete": false,
+  "guest_to_clinical_path": false
+}

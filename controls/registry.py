@@ -9,6 +9,7 @@ import yaml
 
 from engine.exceptions import RegistryError
 from engine.models import ControlDefinition, Category
+from engine.audit_trail import FileAccessTracker
 
 DEFINITIONS_FILE = Path(__file__).resolve().parent / "control_definitions.yaml"
 
@@ -26,6 +27,9 @@ class ControlRegistry:
         if not path.exists():
             raise RegistryError(f"Control definitions not found: {path}")
 
+        FileAccessTracker.instance().record(
+            str(path), "read", "ControlRegistry", "HIPAA control definitions",
+        )
         with open(path, "r") as f:
             data = yaml.safe_load(f)
 

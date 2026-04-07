@@ -20,6 +20,51 @@ A Python-based continuous compliance monitoring engine that **actively verifies 
 - **Check History** — Persists results across runs for freshness tracking and trend analysis
 - **CSV/JSON Export** — Export findings for integration with other tools
 
+## Privacy & Data Handling
+
+**This tool makes zero network connections. All data stays on your local machine.**
+
+The HIPAA Compliance Engine is designed for environments where data privacy is paramount. Here's exactly what the tool does and doesn't do:
+
+### What the tool DOES
+- Reads configuration files you provide (config.yaml)
+- Reads evidence files you point it to (JSON/CSV exports from your existing tools)
+- Reads its own control definitions (bundled YAML)
+- Writes check results to a local history file (data/check_history.json)
+- Writes PDF reports to a local output folder (output/)
+
+### What the tool DOES NOT do
+- Makes no network connections of any kind
+- Sends no data to any server, cloud, or third party
+- Runs no shell commands or subprocesses
+- Reads no environment variables
+- Accesses no files outside the paths you explicitly configure
+- Requires no API keys, tokens, or credentials
+
+### Verify It Yourself
+
+Run the built-in self-audit to see exactly what files are accessed:
+```bash
+python run_engine.py self-audit --demo
+```
+
+Or verify the source code directly:
+```bash
+# Confirm zero network calls
+grep -rn "requests\|urllib\|http\.\|socket\." checks/ engine/ scoring/ reports/
+
+# Confirm zero shell commands
+grep -rn "subprocess\|os\.system\|os\.popen" checks/ engine/ scoring/ reports/
+
+# Confirm zero environment variable reads
+grep -rn "os\.environ\|os\.getenv" checks/ engine/ scoring/ reports/
+```
+
+### For Your IT Team / Auditor
+The complete source code is available at [github.com/itsnmills/hipaa-compliance-engine](https://github.com/itsnmills/hipaa-compliance-engine). Every line is auditable. The `self-audit` command provides a complete transparency report showing exactly what the tool accessed during any scan. We encourage your IT team to review the code before running it in your environment.
+
+---
+
 ## Quick Start
 
 ### Installation
@@ -81,6 +126,7 @@ python run_engine.py scan --category technical
 | `control CONTROL_ID` | Show control definition details |
 | `export [--demo] [--format csv\|json]` | Export findings |
 | `history` | View check history |
+| `self-audit [--demo]` | Show exactly what files the engine reads/writes |
 
 ## Architecture
 
@@ -93,6 +139,7 @@ hipaa-compliance-engine/
 │   ├── orchestrator.py              # Main execution orchestrator
 │   ├── config.py                    # Configuration loader
 │   ├── models.py                    # Data models (dataclasses)
+│   ├── audit_trail.py               # File access tracking (self-audit)
 │   └── exceptions.py               # Custom exceptions
 ├── controls/
 │   ├── registry.py                  # Control registry loader
@@ -111,7 +158,7 @@ hipaa-compliance-engine/
 │   ├── asset_inventory.py           # Asset inventory & network map
 │   ├── ba_management.py             # Business associate oversight
 │   ├── workforce_security.py        # Training & termination
-│   ├── policy_documentation.py      # Written policies
+│   ├── policy_documentation.py      # Written policies + directory scan
 │   └── patch_management.py          # Patch compliance
 ├── scoring/
 │   ├── freshness.py                 # Time-decay freshness model
@@ -120,6 +167,14 @@ hipaa-compliance-engine/
 │   ├── pdf_generator.py             # ReportLab PDF report
 │   ├── dashboard.py                 # Rich terminal dashboard
 │   └── templates.py                 # Report text & color templates
+├── templates/                       # Evidence file templates
+│   ├── README.md                    # Template preparation guide
+│   ├── mfa_config_template.json
+│   ├── encryption_status_template.json
+│   ├── vulnerability_scans_template.json
+│   ├── ... (14 templates total)
+│   ├── asset_inventory_template.csv  # CSV alternative
+│   └── workforce_roster_template.csv # CSV alternative
 ├── demo/
 │   ├── simulator.py                 # Demo mode utilities
 │   └── sample_data/                 # 13 simulated data files
@@ -205,6 +260,30 @@ This engine maps all mandatory controls from the 2025 NPRM, including new requir
 - **Annual BA Verification** (written, SME-certified)
 - **1-Hour Access Termination** (upon employment end)
 - **Complete Technology Asset Inventory** (reviewed annually)
+
+## Evidence File Preparation
+
+The engine supports **file-import mode** for production use. Instead of live API connections, you export data from your existing tools into JSON/CSV files and point the engine at them.
+
+### Setup Steps
+
+1. Review `templates/` for the expected format of each evidence file
+2. Export data from your existing tools (Nessus, Azure AD, Veeam, etc.)
+3. Save exports to a directory on your machine
+4. Update `config.yaml` with the file paths under the `evidence:` section
+5. Run `python run_engine.py scan` to verify
+
+### Policy Directory Scan
+
+For policy documents, you can either provide a JSON manifest or point `policies_dir` at a directory of actual policy files (`.pdf`, `.docx`, `.md`, `.txt`). The engine will:
+
+- Match files by expected filename patterns (e.g., `risk_analysis.pdf`, `incident_response.docx`)
+- Check modification dates to verify policies have been reviewed within 12 months
+- Report missing and overdue policies
+
+### Self-Audit
+
+Run `python run_engine.py self-audit --demo` to see a complete transparency report of every file the engine reads and writes during a scan.
 
 ## Extending
 

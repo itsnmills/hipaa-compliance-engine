@@ -14,12 +14,21 @@ class WorkforceSecurityCheck(BaseCheck):
     def execute(self, control_id: str, method: str) -> CheckResult:
         if self.demo:
             return self._demo_check(control_id, method)
-        return self._make_result(
-            control_id=control_id,
-            status=CheckStatus.ERROR.value,
-            score=0.0,
-            details="Live workforce check requires HR/training system configuration",
-        )
+        return self._live_check(control_id, method)
+
+    def _live_check(self, control_id: str, method: str) -> CheckResult:
+        """Live mode: load evidence from user-configured file path."""
+        data = self._load_evidence_file("workforce_roster")
+        if data is None:
+            return self._make_not_configured_result(control_id, "workforce_roster", 365)
+        dispatch = {
+            "check_training_compliance": self._check_training_compliance,
+            "check_access_termination": self._check_access_termination,
+            "check_workforce_authorization": self._check_workforce_authorization,
+        }
+        handler = dispatch.get(method, self._check_training_compliance)
+        return handler(control_id, data)
+
 
     def _demo_check(self, control_id: str, method: str) -> CheckResult:
         data = self._load_demo_data("workforce_roster.json") or {}

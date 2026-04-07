@@ -47,13 +47,78 @@ environment:
     endpoint: "https://siem.example.com"
 
 evidence:
-  policies_dir: "/path/to/policies"
-  training_records: "/path/to/training"
-  ba_agreements: "/path/to/baa"
-  asset_inventory: "/path/to/inventory"
-  ir_plan: "/path/to/ir-plan"
-  pentest_reports: "/path/to/pentests"
-  network_diagrams: "/path/to/network-maps"
+  # MFA configuration export — JSON file with identity provider MFA status
+  # Format: { "identity_providers": [...], "total_users": N, "mfa_enrolled": N, "mfa_exceptions": [...] }
+  # See templates/mfa_config_template.json for full structure
+  mfa_config: null  # "/path/to/mfa_export.json"
+
+  # Encryption status — JSON file documenting encryption across endpoints and servers
+  # Format: { "endpoints": [...], "databases": [...], "tls_configurations": [...], "certificates": [...] }
+  # See templates/encryption_status_template.json
+  encryption_status: null  # "/path/to/encryption_status.json"
+
+  # Vulnerability scan results — Nessus/Qualys/OpenVAS JSON export
+  # Format: { "scans": [...], "open_vulnerabilities": [...], "total_vulnerabilities": N }
+  # See templates/vulnerability_scans_template.json
+  vulnerability_scans: null  # "/path/to/nessus_results.json"
+
+  # Penetration test report — JSON summary of annual pen test
+  # Format: { "report": { "test_date": "...", "tester": {...} }, "findings": [...] }
+  # See templates/pentest_report_template.json
+  pentest_reports: null  # "/path/to/pentest_report.json"
+
+  # Network topology — JSON export of network segments and firewall rules
+  # Format: { "segments": [...], "firewall_rules": [...], "lateral_movement_risks": [...] }
+  # See templates/network_topology_template.json
+  network_topology: null  # "/path/to/network_topology.json"
+
+  # Access control configuration — JSON user/role inventory
+  # Format: { "users": [...], "roles": [...], "shared_accounts": [...], "rbac_configured": true }
+  # See templates/access_controls_template.json
+  access_controls: null  # "/path/to/access_controls.json"
+
+  # Audit log configuration — JSON SIEM/log status
+  # Format: { "siem": {...}, "log_sources": [...], "retention": {...}, "review_procedures": {...} }
+  # See templates/audit_logs_template.json
+  audit_logs: null  # "/path/to/audit_logs.json"
+
+  # Incident response plan — JSON summary of IR plan and testing
+  # Format: { "plan": { "exists": true, "last_review": "..." }, "tests": [...], "notification_procedures": {...} }
+  # See templates/ir_plan_template.json
+  ir_plan: null  # "/path/to/ir_plan.json"
+
+  # Backup and DR status — JSON backup job status
+  # Format: { "backup_jobs": [...], "dr_plan": {...}, "dr_tests": [...], "last_restore_test": {...} }
+  # See templates/backup_status_template.json
+  backup_status: null  # "/path/to/backup_status.json"
+
+  # Technology asset inventory — JSON or CSV of all assets
+  # JSON: { "assets": [...], "network_map": {...}, "media_controls": {...} }
+  # CSV: columns hostname, type, os, role, ephi, location, owner, status
+  # See templates/asset_inventory_template.json or asset_inventory_template.csv
+  asset_inventory: null  # "/path/to/asset_inventory.json"
+
+  # Business associate agreements — JSON BA tracking
+  # Format: { "business_associates": [...] }
+  # See templates/ba_agreements_template.json
+  ba_agreements: null  # "/path/to/ba_agreements.json"
+
+  # Workforce roster — JSON or CSV of staff and training records
+  # JSON: { "workforce_members": [...], "termination_procedures": {...}, "authorization": {...} }
+  # CSV: columns name, role, hire_date, training_status, last_training, access_level
+  # See templates/workforce_roster_template.json or workforce_roster_template.csv
+  workforce_roster: null  # "/path/to/workforce_roster.json"
+
+  # Policy documents — EITHER a JSON manifest OR a directory path containing policy files
+  # JSON: { "policies": [...], "risk_analysis": {...}, "security_officer": {...}, ... }
+  # Directory: point to a folder of .pdf/.docx/.md files — engine checks existence and dates
+  # See templates/policy_documents_template.json
+  policies_dir: null  # "/path/to/policies/" or "/path/to/policy_manifest.json"
+
+  # Patch management status — JSON patch compliance data
+  # Format: { "sla_policy": {...}, "systems": [...] }
+  # See templates/patch_status_template.json
+  patch_status: null  # "/path/to/patch_status.json"
 
 alerts:
   freshness_warning_threshold: 0.25

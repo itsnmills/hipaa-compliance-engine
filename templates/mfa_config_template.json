@@ -1,0 +1,40 @@
+{
+  "_comment": "MFA Configuration Template — Fill in your identity provider and user MFA status",
+  "identity_providers": [
+    {
+      "type": "azure_ad",
+      "tenant_id": "YOUR-TENANT-ID",
+      "mfa_enforced": true,
+      "users_total": 0,
+      "users_mfa_enrolled": 0
+    }
+  ],
+  "total_users": 0,
+  "mfa_enrolled": 0,
+  "mfa_exceptions": [
+    {
+      "user": "example-user",
+      "reason": "Reason for MFA exception",
+      "exception_date": "YYYY-MM-DD",
+      "approved_by": "Approver Name"
+    }
+  ],
+  "conditional_access_policies": [
+    {
+      "name": "Require MFA for EHR Access",
+      "target": "all_users",
+      "requires_mfa": true,
+      "enabled": true
+    }
+  ],
+  "users": [
+    {"name": "Employee Name", "role": "Role Title", "mfa_enrolled": true}
+  ],
+  "shared_accounts": [],
+  "rbac_configured": false,
+  "auto_logoff_enabled": false,
+  "authorization_policy_exists": false,
+  "access_reviews": [
+    {"date": "YYYY-MM-DD", "reviewer": "Reviewer Name", "findings": 0}
+  ]
+}

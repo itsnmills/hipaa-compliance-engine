@@ -1,0 +1,43 @@
+{
+  "_comment": "Asset Inventory Template — All technology assets that create, receive, maintain, or transmit ePHI",
+  "last_update": "YYYY-MM-DD",
+  "categories_covered": ["Servers", "Workstations", "Network Equipment", "Medical Devices", "Cloud Services"],
+  "assets": [
+    {
+      "hostname": "server-01",
+      "type": "Server",
+      "os": "Windows Server 2022",
+      "role": "EHR System",
+      "ephi": true,
+      "ephi_classified": true,
+      "location": "Server Room",
+      "owner": "IT Department",
+      "status": "current"
+    },
+    {
+      "hostname": "workstation-01",
+      "type": "Workstation",
+      "os": "Windows 11",
+      "role": "Clinical",
+      "ephi": true,
+      "ephi_classified": true,
+      "location": "Office",
+      "owner": "Department Manager",
+      "status": "current"
+    }
+  ],
+  "network_map": {
+    "exists": false,
+    "last_update": "YYYY-MM-DD",
+    "data_flows_documented": false,
+    "format": "Visio/Lucidchart/Draw.io",
+    "location": "Documentation repository"
+  },
+  "media_controls": {
+    "disposal_procedures": false,
+    "disposal_method": "Description of media disposal process",
+    "encryption_portable": false,
+    "inventory_tracking": false,
+    "byod_policy": false
+  }
+}

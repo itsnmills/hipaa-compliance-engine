@@ -1,0 +1,36 @@
+{
+  "_comment": "Incident Response Plan Template — IR plan details, test history, and notification procedures",
+  "plan": {
+    "exists": false,
+    "version": "1.0",
+    "last_review": "YYYY-MM-DD",
+    "approved_by": "Approver Name",
+    "sections": [
+      "Incident Classification",
+      "Notification Procedures",
+      "Containment Procedures",
+      "Eradication & Recovery",
+      "Post-Incident Review",
+      "Breach Notification (HHS/Patients)"
+    ]
+  },
+  "tests": [
+    {
+      "date": "YYYY-MM-DD",
+      "type": "Tabletop Exercise",
+      "scenario": "Description of test scenario",
+      "participants": 0,
+      "findings": [
+        "Finding from the exercise"
+      ],
+      "status": "completed"
+    }
+  ],
+  "notification_procedures": {
+    "ba_24hr_notification": false,
+    "hhs_notification": false,
+    "patient_notification": false,
+    "media_notification": false,
+    "contact_list_current": false
+  }
+}

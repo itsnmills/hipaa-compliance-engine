@@ -1,0 +1,39 @@
+{
+  "_comment": "Audit Logs Template — SIEM configuration, log sources, retention, and review procedures",
+  "siem": {
+    "type": "Wazuh",
+    "version": "4.7",
+    "active": true,
+    "endpoint": "https://siem.example.local",
+    "agents_deployed": 0,
+    "agents_active": 0
+  },
+  "log_sources": [
+    {
+      "name": "server-01",
+      "type": "Windows Event Log",
+      "status": "active",
+      "events_24h": 0
+    },
+    {
+      "name": "firewall-01",
+      "type": "Syslog (Firewall)",
+      "status": "active",
+      "events_24h": 0
+    }
+  ],
+  "retention": {
+    "days": 2190,
+    "storage_used_gb": 0,
+    "storage_total_gb": 0,
+    "compliant": false
+  },
+  "review_procedures": {
+    "regular_reviews": false,
+    "review_frequency": "weekly",
+    "last_review": "YYYY-MM-DD",
+    "reviewer": "Reviewer Name",
+    "automated_alerts": false,
+    "alert_rules": 0
+  }
+}

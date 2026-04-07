@@ -2,10 +2,35 @@
 
 from __future__ import annotations
 
+import os
+import re
 from datetime import datetime
+from pathlib import Path
 
 from engine.models import CheckResult, CheckStatus, Finding
+from engine.audit_trail import FileAccessTracker
 from checks.base import BaseCheck
+
+# Expected policy filenames for directory-scan mode.
+# Maps a human-readable policy name to a list of filename patterns (without extension).
+POLICY_FILE_PATTERNS: dict[str, list[str]] = {
+    "Risk Analysis": ["risk_analysis", "risk_management"],
+    "Access Control Policy": ["access_control"],
+    "Security Awareness Training": ["security_awareness_training", "training"],
+    "Incident Response Plan": ["incident_response", "ir_plan"],
+    "Contingency Plan": ["contingency_plan", "disaster_recovery", "dr_plan"],
+    "Business Associate Policy": ["business_associate", "baa_management"],
+    "Encryption Policy": ["encryption"],
+    "Audit Log Policy": ["audit_log", "audit_controls"],
+    "Physical Security Policy": ["physical_security", "facility_access"],
+    "Sanction Policy": ["sanction", "sanctions"],
+    "Workforce Security Policy": ["workforce_security"],
+    "Media Disposal Policy": ["media_disposal", "device_media"],
+    "Patch Management Policy": ["patch_management"],
+    "Network Security Policy": ["network_segmentation", "network_security"],
+}
+
+POLICY_EXTENSIONS = {".pdf", ".docx", ".doc", ".md", ".txt"}
 
 
 class PolicyDocumentationCheck(BaseCheck):
@@ -14,12 +39,48 @@ class PolicyDocumentationCheck(BaseCheck):
     def execute(self, control_id: str, method: str) -> CheckResult:
         if self.demo:
             return self._demo_check(control_id, method)
-        return self._make_result(
-            control_id=control_id,
-            status=CheckStatus.ERROR.value,
-            score=0.0,
-            details="Live policy check requires policy directory configuration",
-        )
+        return self._live_check(control_id, method)
+
+    def _live_check(self, control_id: str, method: str) -> CheckResult:
+        """Live mode: load evidence from user-configured file path.
+
+        Supports two modes:
+        1. JSON manifest mode — user provides a policy_documents.json
+        2. Directory scan mode — user points policies_dir at a folder of
+           actual .pdf/.docx/.md files. The engine checks filenames and
+           modification dates.
+        """
+        evidence_config = self.config.get("evidence", {})
+        path_str = evidence_config.get("policies_dir")
+        if not path_str:
+            return self._make_not_configured_result(control_id, "policies_dir", 365)
+
+        path = Path(path_str)
+        if not path.exists():
+            return self._make_not_configured_result(control_id, "policies_dir", 365)
+
+        # Decide mode: directory of real docs vs JSON manifest
+        if path.is_dir() and not any(path.glob("*.json")):
+            return self._directory_scan_check(control_id, method, path)
+
+        # JSON manifest mode — use existing _load_evidence_file
+        data = self._load_evidence_file("policies_dir")
+        if data is None:
+            return self._make_not_configured_result(control_id, "policies_dir", 365)
+
+        dispatch = {
+            "check_risk_analysis": self._check_risk_analysis,
+            "check_risk_management": self._check_risk_management,
+            "check_security_officer": self._check_security_officer,
+            "check_annual_audit": self._check_annual_audit,
+            "check_compliance_audit": self._check_compliance_audit,
+            "check_documentation": self._check_documentation,
+            "check_facility_security": self._check_facility_security,
+            "check_workstation_policy": self._check_workstation_policy,
+        }
+        handler = dispatch.get(method, self._check_documentation)
+        return handler(control_id, data)
+
 
     def _demo_check(self, control_id: str, method: str) -> CheckResult:
         data = self._load_demo_data("policy_documents.json") or {}
@@ -413,6 +474,147 @@ class PolicyDocumentationCheck(BaseCheck):
             evidence=workstation, findings=findings,
             details=f"Workstation policy: {workstation.get('use_policy', False)}, "
                    f"auto-lock: {workstation.get('auto_lock', False)}",
+            decay_days=365,
+        )
+
+    # ------------------------------------------------------------------
+    # Directory-Scan Mode
+    # ------------------------------------------------------------------
+
+    def _directory_scan_check(
+        self, control_id: str, method: str, policies_dir: Path,
+    ) -> CheckResult:
+        """Scan a directory of actual policy documents by filename pattern.
+
+        Checks:
+        - Which expected policy documents exist
+        - Whether each file has been modified within the last 12 months
+        """
+        tracker = FileAccessTracker.instance()
+        tracker.record(
+            str(policies_dir), "read", self.__class__.__name__,
+            "Policy documents directory (scan mode)",
+        )
+
+        # Collect all document files in the directory
+        doc_files: dict[str, Path] = {}
+        for f in policies_dir.iterdir():
+            if f.is_file() and f.suffix.lower() in POLICY_EXTENSIONS:
+                doc_files[f.stem.lower()] = f
+
+        now = datetime.now()
+        found_policies: list[dict] = []
+        missing_policies: list[str] = []
+        overdue_reviews: list[str] = []
+
+        for policy_name, patterns in POLICY_FILE_PATTERNS.items():
+            matched_file = None
+            for pattern in patterns:
+                # Try exact match first, then prefix match
+                if pattern in doc_files:
+                    matched_file = doc_files[pattern]
+                    break
+                # Prefix match: risk_analysis_v2.pdf
+                for stem, fpath in doc_files.items():
+                    if stem.startswith(pattern):
+                        matched_file = fpath
+                        break
+                if matched_file:
+                    break
+
+            if matched_file:
+                mtime = datetime.fromtimestamp(matched_file.stat().st_mtime)
+                days_since = (now - mtime).days
+                review_overdue = days_since > 365
+
+                tracker.record(
+                    str(matched_file), "read", self.__class__.__name__,
+                    f"Policy document: {policy_name}",
+                )
+
+                found_policies.append({
+                    "name": policy_name,
+                    "exists": True,
+                    "file": matched_file.name,
+                    "last_modified": mtime.isoformat()[:10],
+                    "days_since_modified": days_since,
+                    "review_overdue": review_overdue,
+                })
+                if review_overdue:
+                    overdue_reviews.append(policy_name)
+            else:
+                missing_policies.append(policy_name)
+                found_policies.append({
+                    "name": policy_name,
+                    "exists": False,
+                })
+
+        # Build result
+        total_expected = len(POLICY_FILE_PATTERNS)
+        total_found = total_expected - len(missing_policies)
+        findings = []
+        score = 1.0
+
+        if missing_policies:
+            penalty = min(0.6, 0.05 * len(missing_policies))
+            score -= penalty
+            findings.append(Finding(
+                control_id=control_id,
+                title=f"{len(missing_policies)} Expected Policy Document(s) Not Found",
+                description=(
+                    f"The following policies were not found in {policies_dir}: "
+                    + ", ".join(missing_policies[:5])
+                    + (f" and {len(missing_policies) - 5} more"
+                       if len(missing_policies) > 5 else "")
+                ),
+                severity="High" if len(missing_policies) > 3 else "Medium",
+                cfr_reference="45 CFR § 164.316",
+                remediation=(
+                    "Create the missing policy documents and save them in the "
+                    "policies directory. See templates/README.md for expected filenames."
+                ),
+                estimated_effort="Short-term",
+            ))
+
+        if overdue_reviews:
+            penalty = min(0.3, 0.03 * len(overdue_reviews))
+            score -= penalty
+            findings.append(Finding(
+                control_id=control_id,
+                title=f"{len(overdue_reviews)} Policies Not Updated Within 12 Months",
+                description=(
+                    "The following policies have not been modified in over 12 months: "
+                    + ", ".join(overdue_reviews[:5])
+                ),
+                severity="Medium",
+                cfr_reference="45 CFR § 164.316",
+                remediation="Review and update all overdue policy documents.",
+                estimated_effort="Short-term",
+            ))
+
+        score = max(0.0, score)
+        if not findings:
+            status = CheckStatus.PASS.value
+        elif score < 0.5:
+            status = CheckStatus.FAIL.value
+        else:
+            status = CheckStatus.PARTIAL.value
+
+        evidence = {
+            "mode": "directory_scan",
+            "directory": str(policies_dir),
+            "total_expected": total_expected,
+            "total_found": total_found,
+            "missing": missing_policies,
+            "overdue_reviews": overdue_reviews,
+            "policies": found_policies,
+        }
+
+        return self._make_result(
+            control_id=control_id, status=status, score=score,
+            evidence=evidence, findings=findings,
+            details=f"Directory scan: {total_found}/{total_expected} policies found, "
+                   f"{len(overdue_reviews)} overdue for review",
             decay_days=365,
         )
 

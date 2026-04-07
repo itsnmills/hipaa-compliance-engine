@@ -1,0 +1,94 @@
+{
+  "_comment": "Policy Documents Template — OR point policies_dir to a directory of actual .pdf/.docx/.md files",
+  "risk_analysis": {
+    "exists": false,
+    "last_update": "YYYY-MM-DD",
+    "comprehensive": false,
+    "signed_by": "Approver Name",
+    "systems_covered": 0,
+    "risks_identified": 0,
+    "version": "1.0"
+  },
+  "risk_management": {
+    "plan_exists": false,
+    "last_update": "YYYY-MM-DD",
+    "mitigation_tracking": false,
+    "risks_mitigated": 0,
+    "risks_accepted": 0,
+    "risks_open": 0
+  },
+  "security_officer": {
+    "designated": false,
+    "documented": false,
+    "name": "",
+    "title": "",
+    "designation_date": "YYYY-MM-DD",
+    "responsibilities_documented": false
+  },
+  "annual_audit": {
+    "conducted": false,
+    "last_date": "YYYY-MM-DD",
+    "auditor": "Auditor Name",
+    "scope": "Full Security Rule assessment",
+    "findings": 0,
+    "remediated": 0,
+    "in_progress": 0
+  },
+  "facility_security": {
+    "plan_exists": false,
+    "badge_access": false,
+    "server_room_locked": false,
+    "visitor_logs": false,
+    "cctv": false,
+    "last_review": "YYYY-MM-DD"
+  },
+  "workstation_policy": {
+    "use_policy": false,
+    "clean_desk": false,
+    "auto_lock": false,
+    "auto_lock_minutes": 15,
+    "privacy_screens": false,
+    "cable_locks": false
+  },
+  "policies": [
+    {"name": "HIPAA Security Policy", "exists": false, "last_review": "YYYY-MM-DD", "review_overdue": false},
+    {"name": "Access Control Policy", "exists": false, "last_review": "YYYY-MM-DD", "review_overdue": false},
+    {"name": "Encryption Policy", "exists": false, "last_review": "YYYY-MM-DD", "review_overdue": false},
+    {"name": "Incident Response Plan", "exists": false, "last_review": "YYYY-MM-DD", "review_overdue": false},
+    {"name": "Disaster Recovery Plan", "exists": false, "last_review": "YYYY-MM-DD", "review_overdue": false},
+    {"name": "Backup Policy", "exists": false, "last_review": "YYYY-MM-DD", "review_overdue": false},
+    {"name": "Workforce Security Policy", "exists": false, "last_review": "YYYY-MM-DD", "review_overdue": false},
+    {"name": "Business Associate Policy", "exists": false, "last_review": "YYYY-MM-DD", "review_overdue": false},
+    {"name": "Patch Management Policy", "exists": false, "last_review": "YYYY-MM-DD", "review_overdue": false},
+    {"name": "Audit Log Review Policy", "exists": false, "last_review": "YYYY-MM-DD", "review_overdue": false},
+    {"name": "Network Security Policy", "exists": false, "last_review": "YYYY-MM-DD", "review_overdue": false},
+    {"name": "Mobile Device Policy", "exists": false, "last_review": "YYYY-MM-DD", "review_overdue": false},
+    {"name": "Data Retention Policy", "exists": false, "last_review": "YYYY-MM-DD", "review_overdue": false},
+    {"name": "Breach Notification Policy", "exists": false, "last_review": "YYYY-MM-DD", "review_overdue": false},
+    {"name": "Physical Security Policy", "exists": false, "last_review": "YYYY-MM-DD", "review_overdue": false},
+    {"name": "Sanction Policy", "exists": false, "last_review": "YYYY-MM-DD", "review_overdue": false}
+  ],
+  "required_policies": [
+    "HIPAA Security Policy",
+    "Access Control Policy",
+    "Encryption Policy",
+    "Incident Response Plan",
+    "Disaster Recovery Plan",
+    "Backup Policy",
+    "Workforce Security Policy",
+    "Business Associate Policy",
+    "Patch Management Policy",
+    "Audit Log Review Policy",
+    "Network Security Policy",
+    "Mobile Device Policy",
+    "Data Retention Policy",
+    "Breach Notification Policy",
+    "Physical Security Policy",
+    "Sanction Policy"
+  ],
+  "retention": {
+    "6yr_compliant": false,
+    "retention_system": "Description of document retention system",
+    "oldest_document_years": 0
+  }
+}

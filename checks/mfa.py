@@ -13,14 +13,20 @@ class MFACheck(BaseCheck):
         """Run MFA verification check."""
         if self.demo:
             return self._demo_check(control_id, method)
+        return self._live_check(control_id, method)
 
-        # Live mode: would check Azure AD, Google Workspace, Okta APIs
-        return self._make_result(
-            control_id=control_id,
-            status=CheckStatus.ERROR.value,
-            score=0.0,
-            details="Live MFA check requires identity provider API configuration",
-        )
+    def _live_check(self, control_id: str, method: str) -> CheckResult:
+        """Live mode: load evidence from user-configured file path."""
+        data = self._load_evidence_file("mfa_config")
+        if data is None:
+            return self._make_not_configured_result(control_id, "mfa_config", 30)
+        if method == "check_mfa_enforcement":
+            return self._check_mfa_enforcement(control_id, data)
+        elif method == "check_universal_mfa":
+            return self._check_universal_mfa(control_id, data)
+        else:
+            return self._check_mfa_enforcement(control_id, data)
+
 
     def _demo_check(self, control_id: str, method: str) -> CheckResult:
         """Demo mode MFA check for Midwest Family Dental."""

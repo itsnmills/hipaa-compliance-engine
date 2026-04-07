@@ -12,12 +12,20 @@ class AccessControlsCheck(BaseCheck):
     def execute(self, control_id: str, method: str) -> CheckResult:
         if self.demo:
             return self._demo_check(control_id, method)
-        return self._make_result(
-            control_id=control_id,
-            status=CheckStatus.ERROR.value,
-            score=0.0,
-            details="Live access control check requires directory service configuration",
-        )
+        return self._live_check(control_id, method)
+
+    def _live_check(self, control_id: str, method: str) -> CheckResult:
+        """Live mode: load evidence from user-configured file path."""
+        data = self._load_evidence_file("access_controls")
+        if data is None:
+            return self._make_not_configured_result(control_id, "access_controls", 180)
+        dispatch = {
+            "check_unique_users": self._check_unique_users,
+            "check_access_authorization": self._check_access_authorization,
+        }
+        handler = dispatch.get(method, self._check_unique_users)
+        return handler(control_id, data)
+
 
     def _demo_check(self, control_id: str, method: str) -> CheckResult:
         data = self._load_demo_data("mfa_config.json") or {}

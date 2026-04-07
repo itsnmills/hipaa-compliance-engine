@@ -1,0 +1,17 @@
+{
+  "_comment": "Business Associate Agreements Template — Track all BAs with ePHI access",
+  "business_associates": [
+    {
+      "name": "Business Associate Name",
+      "service": "Description of services provided",
+      "baa_status": "current",
+      "baa_execution_date": "YYYY-MM-DD",
+      "baa_expiry_date": "YYYY-MM-DD",
+      "annual_verification": false,
+      "verification_date": null,
+      "notification_24hr_clause": false,
+      "sme_certification": false,
+      "risk_tier": "High"
+    }
+  ]
+}

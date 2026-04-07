@@ -9,6 +9,7 @@ from typing import Any
 import yaml
 
 from engine.exceptions import ConfigurationError
+from engine.audit_trail import FileAccessTracker
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -31,6 +32,9 @@ def load_config(config_path: str | None = None, demo: bool = False) -> dict[str,
     if not path.exists():
         raise ConfigurationError(f"Configuration file not found: {config_path}")
 
+    FileAccessTracker.instance().record(
+        str(path), "read", "ConfigLoader", "Engine configuration",
+    )
     with open(path, "r") as f:
         config = yaml.safe_load(f)
 

@@ -12,6 +12,7 @@ Usage:
     python run_engine.py control CONTROL_ID
     python run_engine.py export [--demo] [--format csv]
     python run_engine.py history
+    python run_engine.py self-audit [--demo]
 """
 
 from __future__ import annotations
@@ -242,6 +243,44 @@ def export_findings(demo: bool, fmt: str, output_path: str | None, config_path: 
         _export_json(report, output_path)
 
     console.print(f"\n[bold green]Exported {len(report.findings)} findings to:[/bold green] {output_path}\n")
+
+
+@cli.command("self-audit")
+@click.option("--demo", is_flag=True, help="Audit demo mode file accesses")
+@click.option("--config", "config_path", type=str, default=None, help="Path to config file")
+def self_audit(demo: bool, config_path: str | None):
+    """Show exactly what files the engine reads and writes (transparency report)."""
+    from engine.audit_trail import FileAccessTracker
+
+    if demo:
+        _print_demo_banner()
+
+    # Enable the tracker before any file operations
+    tracker = FileAccessTracker.enable()
+
+    config = load_config(config_path, demo=demo)
+    org_name = config["organization"]["name"]
+
+    console.print(f"\n[bold cyan]Running self-audit scan for [white]{org_name}[/white]...[/bold cyan]\n")
+
+    orchestrator = ComplianceOrchestrator(config, demo=demo)
+
+    with Progress(
+        SpinnerColumn(),
+        TextColumn("[progress.description]{task.description}"),
+        BarColumn(bar_width=30),
+        TextColumn("[progress.percentage]{task.percentage:>3.0f}%"),
+        console=console,
+    ) as progress:
+        task = progress.add_task("Auditing file access...", total=31)
+
+        def _callback(control_id: str, status: str):
+            progress.update(task, advance=1)
+
+        orchestrator.run_all_checks(callback=_callback)
+
+    console.print()
+    tracker.print_report()
 
 
 @cli.command()

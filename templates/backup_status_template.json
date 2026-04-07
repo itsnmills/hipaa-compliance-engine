@@ -1,0 +1,49 @@
+{
+  "_comment": "Backup Status Template — Backup jobs, DR plan, restore tests, and offsite replication",
+  "backup_type": "Your Backup Software",
+  "schedule": {
+    "frequency": "daily",
+    "time": "02:00",
+    "full_backup_day": "Sunday"
+  },
+  "retention_days": 90,
+  "backup_jobs": [
+    {
+      "name": "EHR Database Backup",
+      "target": "server-01",
+      "last_run": "YYYY-MM-DDTHH:MM:SS",
+      "last_status": "success",
+      "size_gb": 0,
+      "duration_minutes": 0
+    }
+  ],
+  "last_restore_test": {
+    "date": "YYYY-MM-DD",
+    "type": "Full restore test description",
+    "result": "success",
+    "restoration_time_hours": 0,
+    "data_integrity": "verified",
+    "tester": "Tester Name"
+  },
+  "offsite_replication": {
+    "enabled": false,
+    "target": "Cloud or offsite location",
+    "encryption": "AES-256",
+    "last_sync": "YYYY-MM-DDTHH:MM:SS"
+  },
+  "dr_plan": {
+    "exists": false,
+    "rto_hours": 72,
+    "rpo_hours": 24,
+    "last_review": "YYYY-MM-DD",
+    "critical_systems": ["ehr-server-01"]
+  },
+  "dr_tests": [
+    {
+      "date": "YYYY-MM-DD",
+      "type": "DR test description",
+      "result": "success",
+      "actual_rto_hours": 0
+    }
+  ]
+}

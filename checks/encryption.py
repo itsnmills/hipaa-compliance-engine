@@ -12,12 +12,21 @@ class EncryptionCheck(BaseCheck):
     def execute(self, control_id: str, method: str) -> CheckResult:
         if self.demo:
             return self._demo_check(control_id, method)
-        return self._make_result(
-            control_id=control_id,
-            status=CheckStatus.ERROR.value,
-            score=0.0,
-            details="Live encryption check requires system access configuration",
-        )
+        return self._live_check(control_id, method)
+
+    def _live_check(self, control_id: str, method: str) -> CheckResult:
+        """Live mode: load evidence from user-configured file path."""
+        data = self._load_evidence_file("encryption_status")
+        if data is None:
+            return self._make_not_configured_result(control_id, "encryption_status", 30)
+        dispatch = {
+            "check_encryption_rest": self._check_encryption_rest,
+            "check_encryption_transit": self._check_encryption_transit,
+            "check_integrity_controls": self._check_integrity_controls,
+        }
+        handler = dispatch.get(method, self._check_encryption_rest)
+        return handler(control_id, data)
+
 
     def _demo_check(self, control_id: str, method: str) -> CheckResult:
         data = self._load_demo_data("encryption_status.json") or {}
