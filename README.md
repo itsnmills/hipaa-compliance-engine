@@ -9,6 +9,27 @@ A Python-based continuous compliance monitoring engine that **actively verifies 
 
 ---
 
+### Compliance Dashboard
+
+<p align="center">
+  <img src="docs/screenshots/scan_demo.svg" alt="HIPAA Compliance Engine — Demo Scan Dashboard" width="800">
+</p>
+
+### PDF Audit Report
+
+<p align="center">
+  <img src="docs/screenshots/report_cover-01.png" alt="PDF Report Cover Page" width="400">
+  <img src="docs/screenshots/report_dashboard-02.png" alt="PDF Report Executive Summary" width="400">
+</p>
+
+### Self-Audit Transparency Report
+
+<p align="center">
+  <img src="docs/screenshots/self_audit_demo.svg" alt="Self-Audit Report" width="800">
+</p>
+
+---
+
 ## Features
 
 - **31 Mandatory Controls** — Maps every control from the 2025 HIPAA Security Rule NPRM (Administrative, Physical, Technical, and Cross-Cutting safeguards)
@@ -218,6 +239,8 @@ effective_score = check_score × freshness
 | 0-39 | Non-Compliant | Red |
 
 ## Demo Mode: Midwest Family Dental
+
+> Try it now: `python run_engine.py scan --demo`
 
 The demo simulates a realistic 18-person dental clinic with mixed compliance:
 
