@@ -11,3 +11,7 @@ output/*.pdf
 data/check_history.json
 *.csv
 .DS_Store
+*.pyc
+__pycache__/
+output/*.pdf
+output/*.csv

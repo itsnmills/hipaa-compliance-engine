@@ -12,6 +12,7 @@ from pathlib import Path
 from typing import Optional
 
 from reportlab.lib import colors
+from reportlab.pdfgen.canvas import Canvas
 from reportlab.lib.enums import TA_CENTER, TA_JUSTIFY, TA_LEFT, TA_RIGHT
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
@@ -879,50 +880,44 @@ class ComplianceReportPDF:
 # PAGE NUMBER CANVAS
 # ============================================================
 
-class _PageNumberCanvas:
+class _PageNumberCanvas(Canvas):
     """Custom canvas that adds page numbers and footer to every page."""
 
     def __init__(self, *args, **kwargs):
-        from reportlab.pdfgen.canvas import Canvas
-        self._canvas_class = Canvas
-        self._canvas = Canvas(*args, **kwargs)
-        self._pages = []
-
-    def __getattr__(self, name):
-        return getattr(self._canvas, name)
+        Canvas.__init__(self, *args, **kwargs)
+        self._saved_page_states = []
 
     def showPage(self):
-        self._pages.append(dict(self._canvas.__dict__))
-        self._canvas.showPage()
+        self._saved_page_states.append(dict(self.__dict__))
+        self._startPage()
 
     def save(self):
-        num_pages = len(self._pages)
-        for i, page in enumerate(self._pages):
-            self._canvas.__dict__.update(page)
+        num_pages = len(self._saved_page_states)
+        for i, state in enumerate(self._saved_page_states):
+            self.__dict__.update(state)
             self._draw_footer(i + 1, num_pages)
-            self._canvas_class.showPage(self._canvas)
-        self._canvas_class.save(self._canvas)
+            Canvas.showPage(self)
+        Canvas.save(self)
 
     def _draw_footer(self, page_num: int, total_pages: int):
-        c = self._canvas
         y = 0.5 * inch
 
         # Line above footer
-        c.setStrokeColor(_hex(BRAND_BORDER))
-        c.setLineWidth(0.5)
-        c.line(MARGIN, y + 10, PAGE_WIDTH - MARGIN, y + 10)
+        self.setStrokeColor(_hex(BRAND_BORDER))
+        self.setLineWidth(0.5)
+        self.line(MARGIN, y + 10, PAGE_WIDTH - MARGIN, y + 10)
 
-        c.setFont("Helvetica", 7)
-        c.setFillColor(_hex(COLOR_NEUTRAL))
+        self.setFont("Helvetica", 7)
+        self.setFillColor(_hex(COLOR_NEUTRAL))
 
         # Left: branding
-        c.drawString(MARGIN, y, "VerifAI Security — HIPAA Compliance Engine")
+        self.drawString(MARGIN, y, "VerifAI Security — HIPAA Compliance Engine")
 
         # Center: page number
-        c.drawCentredString(PAGE_WIDTH / 2, y, f"Page {page_num} of {total_pages}")
+        self.drawCentredString(PAGE_WIDTH / 2, y, f"Page {page_num} of {total_pages}")
 
         # Right: confidential
-        c.drawRightString(PAGE_WIDTH - MARGIN, y, "CONFIDENTIAL")
+        self.drawRightString(PAGE_WIDTH - MARGIN, y, "CONFIDENTIAL")
 
 
 def generate_pdf(report: ComplianceReport, output_path: str) -> str:
