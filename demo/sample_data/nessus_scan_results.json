@@ -1,0 +1,108 @@
+{
+  "scanner_type": "Nessus Professional",
+  "scans": [
+    {
+      "scan_id": "SCAN-2026-Q1",
+      "scan_date": "2026-02-15",
+      "scan_type": "Full Network Scan",
+      "targets": ["10.100.1.0/24", "10.100.2.0/24", "10.200.1.0/24"],
+      "hosts_scanned": 18,
+      "duration_minutes": 145,
+      "status": "completed"
+    },
+    {
+      "scan_id": "SCAN-2025-Q3",
+      "scan_date": "2025-09-10",
+      "scan_type": "Full Network Scan",
+      "targets": ["10.100.1.0/24", "10.100.2.0/24"],
+      "hosts_scanned": 16,
+      "duration_minutes": 130,
+      "status": "completed"
+    }
+  ],
+  "total_vulnerabilities": 47,
+  "resolved_vulnerabilities": 38,
+  "open_vulnerabilities": [
+    {
+      "cve": "CVE-2025-21391",
+      "severity": "Critical",
+      "title": "Windows Storage Elevation of Privilege Vulnerability",
+      "affected_host": "file-server-01",
+      "discovered_date": "2026-02-15",
+      "days_open": 51,
+      "remediation": "Apply KB5034763 security update"
+    },
+    {
+      "cve": "CVE-2025-21418",
+      "severity": "High",
+      "title": "Windows Ancillary Function Driver for WinSock EoP",
+      "affected_host": "ehr-server-01",
+      "discovered_date": "2026-02-15",
+      "days_open": 51,
+      "remediation": "Apply February 2025 cumulative update"
+    },
+    {
+      "cve": "CVE-2024-50379",
+      "severity": "High",
+      "title": "Apache Tomcat Race Condition RCE",
+      "affected_host": "web-server-01",
+      "discovered_date": "2026-02-15",
+      "days_open": 51,
+      "remediation": "Update Apache Tomcat to 11.0.2 or later"
+    },
+    {
+      "cve": "CVE-2025-0411",
+      "severity": "High",
+      "title": "7-Zip Mark of the Web Bypass",
+      "affected_host": "front-desk-01",
+      "discovered_date": "2026-02-15",
+      "days_open": 51,
+      "remediation": "Update 7-Zip to version 24.09 or later"
+    },
+    {
+      "cve": "CVE-2025-24085",
+      "severity": "Medium",
+      "title": "Apple macOS CoreMedia Use-After-Free",
+      "affected_host": "admin-ws-01",
+      "discovered_date": "2026-02-15",
+      "days_open": 51,
+      "remediation": "Update macOS to 15.3 or later"
+    },
+    {
+      "cve": "CVE-2024-53104",
+      "severity": "Medium",
+      "title": "Linux Kernel USB Video Class Driver OOB Write",
+      "affected_host": "db-server-01",
+      "discovered_date": "2026-02-15",
+      "days_open": 51,
+      "remediation": "Update kernel to patched version"
+    },
+    {
+      "cve": "CVE-2025-0065",
+      "severity": "Medium",
+      "title": "TeamViewer Privilege Escalation",
+      "affected_host": "clinical-ws-02",
+      "discovered_date": "2026-02-15",
+      "days_open": 51,
+      "remediation": "Update TeamViewer to latest version"
+    },
+    {
+      "cve": "CVE-2024-12356",
+      "severity": "Low",
+      "title": "BeyondTrust RS Command Injection (patched variant check)",
+      "affected_host": "ehr-server-01",
+      "discovered_date": "2026-02-15",
+      "days_open": 51,
+      "remediation": "Verify BeyondTrust version is current"
+    },
+    {
+      "cve": "CVE-2025-22224",
+      "severity": "Low",
+      "title": "VMware ESXi TOCTOU Race Condition",
+      "affected_host": "hypervisor-01",
+      "discovered_date": "2026-02-15",
+      "days_open": 51,
+      "remediation": "Apply VMware security advisory VMSA-2025-0004"
+    }
+  ]
+}

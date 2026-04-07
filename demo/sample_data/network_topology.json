@@ -1,0 +1,73 @@
+{
+  "segments": [
+    {
+      "name": "Clinical (VLAN 100)",
+      "vlan": 100,
+      "subnet": "10.100.1.0/24",
+      "ephi": true,
+      "hosts": ["ehr-server-01", "db-server-01", "img-server-01", "clinical-ws-01", "clinical-ws-02", "clinical-ws-03"],
+      "isolation_status": "partial"
+    },
+    {
+      "name": "Admin (VLAN 101)",
+      "vlan": 101,
+      "subnet": "10.100.2.0/24",
+      "ephi": true,
+      "hosts": ["file-server-01", "front-desk-01", "front-desk-02", "admin-ws-01"],
+      "isolation_status": "partial"
+    },
+    {
+      "name": "DMZ (VLAN 200)",
+      "vlan": 200,
+      "subnet": "10.200.1.0/24",
+      "ephi": true,
+      "hosts": ["web-server-01"],
+      "isolation_status": "isolated"
+    },
+    {
+      "name": "Guest WiFi (VLAN 300)",
+      "vlan": 300,
+      "subnet": "10.300.1.0/24",
+      "ephi": false,
+      "hosts": [],
+      "isolation_status": "isolated"
+    },
+    {
+      "name": "Medical IoT (VLAN 150)",
+      "vlan": 150,
+      "subnet": "10.150.1.0/24",
+      "ephi": false,
+      "hosts": ["xray-unit-01", "panoramic-01"],
+      "isolation_status": "isolated"
+    }
+  ],
+  "firewall_rules": [
+    {"id": "FW-001", "source": "VLAN 300", "destination": "VLAN 100", "action": "DENY", "protocol": "ANY"},
+    {"id": "FW-002", "source": "VLAN 300", "destination": "VLAN 101", "action": "DENY", "protocol": "ANY"},
+    {"id": "FW-003", "source": "VLAN 200", "destination": "VLAN 100", "action": "ALLOW", "protocol": "TCP/443", "note": "Patient portal to EHR API"},
+    {"id": "FW-004", "source": "VLAN 101", "destination": "VLAN 100", "action": "ALLOW", "protocol": "TCP/445,139", "note": "NEEDS REMEDIATION — SMB access"},
+    {"id": "FW-005", "source": "VLAN 150", "destination": "VLAN 100", "action": "ALLOW", "protocol": "TCP/8080", "note": "Imaging devices to img server"},
+    {"id": "FW-006", "source": "ANY", "destination": "VLAN 200", "action": "ALLOW", "protocol": "TCP/443", "note": "Public HTTPS"}
+  ],
+  "lateral_movement_risks": [
+    {
+      "source_segment": "Admin (VLAN 101)",
+      "target_segment": "Clinical (VLAN 100)",
+      "protocol": "SMB (TCP/445,139)",
+      "description": "SMB file sharing ports open between admin and clinical VLANs, allowing potential lateral movement from compromised admin workstation to ePHI servers",
+      "risk_level": "High",
+      "remediation": "Block SMB traffic between VLANs, use dedicated file share on neutral segment"
+    },
+    {
+      "source_segment": "Medical IoT (VLAN 150)",
+      "target_segment": "Clinical (VLAN 100)",
+      "protocol": "TCP/8080",
+      "description": "IoT imaging devices have direct HTTP access to imaging server — should be restricted to specific IP pair",
+      "risk_level": "Medium",
+      "remediation": "Restrict FW-005 to specific source/destination IPs instead of subnet-to-subnet"
+    }
+  ],
+  "segmentation_tests": [],
+  "iot_isolation_incomplete": true,
+  "guest_to_clinical_path": false
+}

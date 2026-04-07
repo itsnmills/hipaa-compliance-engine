@@ -1,0 +1,155 @@
+---
+# HIPAA Compliance Engine — Demo Configuration
+# Simulates: Midwest Family Dental (small dental clinic)
+
+organization:
+  name: "Midwest Family Dental"
+  type: "covered_entity"
+  size: "small"
+  practice_type: "dental"
+
+environment:
+  identity_providers:
+    - type: azure_ad
+      tenant_id: "demo-tenant-mfd-001"
+      check_method: file_import
+      users: 18
+    - type: google_workspace
+      domain: "midwestfamilydental.com"
+      check_method: file_import
+      users: 18
+
+  servers:
+    - hostname: ehr-server-01
+      os: windows_server_2022
+      role: ehr_system
+      ephi: true
+      ip: "10.100.1.10"
+    - hostname: db-server-01
+      os: ubuntu_22
+      role: database
+      ephi: true
+      ip: "10.100.1.20"
+    - hostname: img-server-01
+      os: windows_server_2022
+      role: imaging
+      ephi: true
+      ip: "10.100.1.30"
+    - hostname: file-server-01
+      os: windows_server_2022
+      role: file_storage
+      ephi: true
+      ip: "10.100.2.10"
+    - hostname: web-server-01
+      os: ubuntu_22
+      role: patient_portal
+      ephi: true
+      ip: "10.200.1.10"
+
+  workstations:
+    - hostname: front-desk-01
+      os: windows_11
+      role: reception
+      ephi: true
+      encrypted: true
+    - hostname: front-desk-02
+      os: windows_11
+      role: reception
+      ephi: true
+      encrypted: true
+    - hostname: clinical-ws-01
+      os: windows_11
+      role: clinical
+      ephi: true
+      encrypted: true
+    - hostname: clinical-ws-02
+      os: windows_11
+      role: clinical
+      ephi: true
+      encrypted: true
+    - hostname: clinical-ws-03
+      os: windows_11
+      role: clinical
+      ephi: true
+      encrypted: false
+    - hostname: admin-ws-01
+      os: macos_14
+      role: administration
+      ephi: true
+      encrypted: true
+    - hostname: dr-laptop-01
+      os: windows_11
+      role: provider
+      ephi: true
+      encrypted: true
+    - hostname: dr-laptop-02
+      os: macos_14
+      role: provider
+      ephi: true
+      encrypted: true
+
+  network:
+    firewall_type: pfsense
+    segments:
+      - name: clinical
+        vlan: 100
+        ephi: true
+        subnet: "10.100.1.0/24"
+      - name: admin
+        vlan: 101
+        ephi: true
+        subnet: "10.100.2.0/24"
+      - name: dmz
+        vlan: 200
+        ephi: true
+        subnet: "10.200.1.0/24"
+      - name: guest
+        vlan: 300
+        ephi: false
+        subnet: "10.300.1.0/24"
+      - name: iot_medical
+        vlan: 150
+        ephi: false
+        subnet: "10.150.1.0/24"
+
+  vulnerability_scanner:
+    type: nessus
+    results_path: "demo/sample_data/nessus_scan_results.json"
+
+  backup:
+    type: veeam
+    schedule: daily
+    retention_days: 90
+    target: "offsite_cloud"
+
+  siem:
+    type: wazuh
+    endpoint: "https://siem.midwestfamilydental.local"
+    log_retention_days: 2190
+
+evidence:
+  policies_dir: "demo/sample_data"
+  training_records: "demo/sample_data/workforce_roster.json"
+  ba_agreements: "demo/sample_data/ba_agreements.json"
+  asset_inventory: "demo/sample_data/asset_inventory.json"
+  ir_plan: "demo/sample_data/ir_plan.json"
+  pentest_reports: "demo/sample_data/pentest_report.json"
+  network_diagrams: "demo/sample_data/network_topology.json"
+
+alerts:
+  freshness_warning_threshold: 0.25
+  email_notifications: false
+  slack_webhook: null
+
+scoring:
+  category_weights:
+    Technical: 0.35
+    Administrative: 0.30
+    Cross-Cutting: 0.25
+    Physical: 0.10
+
+report:
+  brand_color: "#1E40AF"
+  logo_text: "VerifAI Security"
+  tool_name: "VerifAI Security — HIPAA Compliance Engine"
+  version: "1.0.0"

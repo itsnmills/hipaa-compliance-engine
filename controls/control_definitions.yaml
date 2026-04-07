@@ -1,0 +1,572 @@
+---
+# HIPAA Security Rule 2025 NPRM — Mandatory Control Registry
+# All 31 controls mapped to 45 CFR Part 164 requirements
+# VerifAI Security — HIPAA Compliance Engine
+
+controls:
+
+  # ============================================================
+  # ADMINISTRATIVE SAFEGUARDS (45 CFR § 164.308)
+  # ============================================================
+
+  - id: ADM-SMP-001
+    cfr_reference: "45 CFR § 164.308(a)(1)(i)"
+    category: Administrative
+    title: "Security Management Process — Risk Analysis"
+    description: >
+      Conduct an accurate and thorough assessment of the potential risks and
+      vulnerabilities to the confidentiality, integrity, and availability of ePHI.
+      Must be documented and updated at least annually.
+    check_module: policy_documentation
+    check_method: check_risk_analysis
+    severity: Critical
+    frequency: annual
+    freshness_decay_days: 365
+    evidence_required: "Written risk analysis document, dated and signed, updated within 12 months"
+    remediation_guidance: >
+      Conduct a comprehensive risk analysis covering all systems that create, receive,
+      maintain, or transmit ePHI. Document all identified risks with likelihood and
+      impact ratings. Update annually or when significant changes occur.
+
+  - id: ADM-SMP-002
+    cfr_reference: "45 CFR § 164.308(a)(1)(ii)(B)"
+    category: Administrative
+    title: "Security Management Process — Risk Management"
+    description: >
+      Implement security measures sufficient to reduce risks and vulnerabilities
+      to a reasonable and appropriate level. Document risk management decisions.
+    check_module: policy_documentation
+    check_method: check_risk_management
+    severity: High
+    frequency: annual
+    freshness_decay_days: 365
+    evidence_required: "Risk management plan with mitigation strategies and implementation timeline"
+    remediation_guidance: >
+      Develop a risk management plan that addresses all risks identified in the risk
+      analysis. Assign owners, set timelines, and track remediation progress.
+
+  - id: ADM-ASR-001
+    cfr_reference: "45 CFR § 164.308(a)(2)"
+    category: Administrative
+    title: "Assigned Security Responsibility"
+    description: >
+      Identify a security official responsible for developing and implementing
+      security policies and procedures.
+    check_module: policy_documentation
+    check_method: check_security_officer
+    severity: High
+    frequency: annual
+    freshness_decay_days: 365
+    evidence_required: "Written designation of security official with name, title, and date"
+    remediation_guidance: >
+      Formally designate a Security Official in writing. Document their responsibilities
+      and ensure they have appropriate authority and resources.
+
+  - id: ADM-WFS-001
+    cfr_reference: "45 CFR § 164.308(a)(3)"
+    category: Administrative
+    title: "Workforce Security — Authorization & Supervision"
+    description: >
+      Implement procedures for authorization and supervision of workforce members
+      who work with ePHI. Ensure clearance procedures and access management.
+    check_module: workforce_security
+    check_method: check_workforce_authorization
+    severity: High
+    frequency: semi-annual
+    freshness_decay_days: 180
+    evidence_required: "Workforce authorization procedures, clearance records, supervision documentation"
+    remediation_guidance: >
+      Document procedures for authorizing workforce access to ePHI. Implement
+      background check requirements and supervision policies. Maintain clearance records.
+
+  - id: ADM-IAM-001
+    cfr_reference: "45 CFR § 164.308(a)(4)"
+    category: Administrative
+    title: "Information Access Management"
+    description: >
+      Implement policies and procedures for authorizing access to ePHI consistent
+      with the minimum necessary standard.
+    check_module: access_controls
+    check_method: check_access_authorization
+    severity: High
+    frequency: semi-annual
+    freshness_decay_days: 180
+    evidence_required: "Access authorization policies, role matrices, access review records"
+    remediation_guidance: >
+      Establish role-based access control policies. Document access authorization
+      procedures and conduct regular access reviews at least semi-annually.
+
+  - id: ADM-SAT-001
+    cfr_reference: "45 CFR § 164.308(a)(5)"
+    category: Administrative
+    title: "Security Awareness & Training"
+    description: >
+      Implement a security awareness and training program for all workforce members
+      including management. Training must be completed within 12 months.
+    check_module: workforce_security
+    check_method: check_training_compliance
+    severity: High
+    frequency: annual
+    freshness_decay_days: 365
+    evidence_required: "Training records showing completion dates for all workforce members"
+    remediation_guidance: >
+      Implement annual HIPAA security awareness training for all workforce members.
+      Track completion dates and follow up on delinquent training. Include topics on
+      phishing, password management, and incident reporting.
+
+  - id: ADM-SIP-001
+    cfr_reference: "45 CFR § 164.308(a)(6)"
+    category: Administrative
+    title: "Security Incident Procedures"
+    description: >
+      Implement policies and procedures to address security incidents including
+      identification, response, mitigation, and documentation.
+    check_module: incident_response
+    check_method: check_ir_plan
+    severity: Critical
+    frequency: annual
+    freshness_decay_days: 365
+    evidence_required: "Written incident response plan, tested within 12 months"
+    remediation_guidance: >
+      Develop a comprehensive incident response plan covering identification,
+      containment, eradication, recovery, and lessons learned. Test the plan
+      annually through tabletop exercises or simulations.
+
+  - id: ADM-CP-001
+    cfr_reference: "45 CFR § 164.308(a)(7)"
+    category: Administrative
+    title: "Contingency Planning — Backup & DR"
+    description: >
+      Establish policies and procedures for data backup, disaster recovery, and
+      emergency mode operations. DR plan must support 72-hour restoration.
+    check_module: backup_recovery
+    check_method: check_backup_status
+    severity: Critical
+    frequency: continuous
+    freshness_decay_days: 30
+    evidence_required: "Backup logs, DR plan, last restore test results, RTO/RPO documentation"
+    remediation_guidance: >
+      Implement automated backup procedures for all ePHI. Test disaster recovery
+      procedures regularly to verify 72-hour restoration capability. Document
+      RTO and RPO for all critical systems.
+
+  - id: ADM-BAC-001
+    cfr_reference: "45 CFR § 164.308(b)"
+    category: Administrative
+    title: "Business Associate Contracts & Management"
+    description: >
+      Ensure all business associates have current BAAs with required provisions
+      including breach notification, safeguard requirements, and termination clauses.
+    check_module: ba_management
+    check_method: check_baa_compliance
+    severity: High
+    frequency: annual
+    freshness_decay_days: 365
+    evidence_required: "BAA inventory with execution dates, annual verification status"
+    remediation_guidance: >
+      Maintain an inventory of all business associates. Ensure all BAAs are current
+      and include required 2025 rule provisions. Conduct annual BA verification.
+
+  # ============================================================
+  # PHYSICAL SAFEGUARDS (45 CFR § 164.310)
+  # ============================================================
+
+  - id: PHY-FAC-001
+    cfr_reference: "45 CFR § 164.310(a)"
+    category: Physical
+    title: "Facility Access Controls"
+    description: >
+      Implement policies and procedures to limit physical access to electronic
+      information systems and the facilities in which they are housed.
+    check_module: policy_documentation
+    check_method: check_facility_security
+    severity: Medium
+    frequency: annual
+    freshness_decay_days: 365
+    evidence_required: "Facility security plan, access control procedures, visitor logs"
+    remediation_guidance: >
+      Implement physical access controls including badge/key access, visitor logs,
+      and secure areas for servers and network equipment. Document facility
+      security procedures.
+
+  - id: PHY-WRK-001
+    cfr_reference: "45 CFR § 164.310(b)-(c)"
+    category: Physical
+    title: "Workstation Use & Security"
+    description: >
+      Implement policies for proper workstation use and physical safeguards
+      for all workstations that access ePHI.
+    check_module: policy_documentation
+    check_method: check_workstation_policy
+    severity: Medium
+    frequency: annual
+    freshness_decay_days: 365
+    evidence_required: "Workstation use policy, clean desk policy, physical security measures"
+    remediation_guidance: >
+      Develop workstation use policies covering screen positioning, clean desk
+      requirements, and automatic lock settings. Implement physical controls
+      such as cable locks and privacy screens.
+
+  - id: PHY-DMC-001
+    cfr_reference: "45 CFR § 164.310(d)"
+    category: Physical
+    title: "Device & Media Controls"
+    description: >
+      Implement policies governing receipt, removal, disposal, and re-use of
+      electronic media containing ePHI.
+    check_module: asset_inventory
+    check_method: check_media_controls
+    severity: Medium
+    frequency: annual
+    freshness_decay_days: 365
+    evidence_required: "Media disposal records, device inventory with encryption status"
+    remediation_guidance: >
+      Implement procedures for secure disposal of media containing ePHI. Track
+      all devices and media, encrypt portable storage, and maintain disposal logs.
+
+  # ============================================================
+  # TECHNICAL SAFEGUARDS (45 CFR § 164.312)
+  # ============================================================
+
+  - id: TECH-AC-001
+    cfr_reference: "45 CFR § 164.312(a)(1)"
+    category: Technical
+    title: "Access Control — Unique User IDs & RBAC"
+    description: >
+      Assign a unique name and/or number for identifying and tracking user identity.
+      Implement role-based access controls with minimum necessary access.
+    check_module: access_controls
+    check_method: check_unique_users
+    severity: High
+    frequency: semi-annual
+    freshness_decay_days: 180
+    evidence_required: "User account list showing unique IDs, role assignments, no shared accounts"
+    remediation_guidance: >
+      Ensure every user has a unique identifier. Eliminate shared accounts. Implement
+      role-based access control with documented role definitions and minimum necessary access.
+
+  - id: TECH-AUD-001
+    cfr_reference: "45 CFR § 164.312(b)"
+    category: Technical
+    title: "Audit Controls — Centralized Logging"
+    description: >
+      Implement hardware, software, and procedural mechanisms for recording and
+      examining activity in systems containing ePHI. Centralize log collection.
+    check_module: audit_logging
+    check_method: check_audit_logging
+    severity: High
+    frequency: continuous
+    freshness_decay_days: 30
+    evidence_required: "SIEM/log collector configuration, log retention settings, review procedures"
+    remediation_guidance: >
+      Deploy centralized logging for all systems handling ePHI. Configure log
+      retention per policy (minimum 6 years). Establish procedures for regular
+      log review and anomaly detection.
+
+  - id: TECH-INT-001
+    cfr_reference: "45 CFR § 164.312(c)"
+    category: Technical
+    title: "Integrity Controls"
+    description: >
+      Implement policies and procedures to protect ePHI from improper alteration
+      or destruction. Verify data integrity mechanisms are in place.
+    check_module: encryption
+    check_method: check_integrity_controls
+    severity: High
+    frequency: semi-annual
+    freshness_decay_days: 180
+    evidence_required: "Data integrity mechanisms (checksums, digital signatures), verification logs"
+    remediation_guidance: >
+      Implement data integrity controls including checksums, digital signatures,
+      or hash verification for ePHI. Configure database integrity constraints
+      and backup verification procedures.
+
+  - id: TECH-PEA-001
+    cfr_reference: "45 CFR § 164.312(d)"
+    category: Technical
+    title: "Person/Entity Authentication"
+    description: >
+      Implement procedures to verify that a person or entity seeking access to ePHI
+      is the one claimed. Multi-factor authentication is mandatory.
+    check_module: mfa
+    check_method: check_mfa_enforcement
+    severity: Critical
+    frequency: continuous
+    freshness_decay_days: 30
+    evidence_required: "MFA policy configuration, user enrollment status, exception list"
+    remediation_guidance: >
+      Enable and enforce multi-factor authentication for all users accessing ePHI.
+      Configure conditional access policies requiring MFA. Eliminate MFA exceptions.
+
+  - id: TECH-TS-001
+    cfr_reference: "45 CFR § 164.312(e)"
+    category: Technical
+    title: "Transmission Security — Encryption in Transit"
+    description: >
+      Implement technical security measures to guard against unauthorized access
+      to ePHI transmitted over electronic communications networks. TLS 1.2+ mandatory.
+    check_module: encryption
+    check_method: check_encryption_transit
+    severity: Critical
+    frequency: continuous
+    freshness_decay_days: 30
+    evidence_required: "TLS configuration showing 1.2+, certificate details, encrypted email config"
+    remediation_guidance: >
+      Ensure all ePHI transmissions use TLS 1.2 or higher. Disable older TLS/SSL
+      versions. Implement encrypted email for ePHI communications. Verify
+      certificate validity and proper chain of trust.
+
+  # ============================================================
+  # CROSS-CUTTING: 2025 MANDATORY REQUIREMENTS
+  # ============================================================
+
+  - id: CC-EAR-001
+    cfr_reference: "45 CFR § 164.312(a)(2)(iv)"
+    category: Cross-Cutting
+    title: "Encryption at Rest — AES-256 Mandatory"
+    description: >
+      Encrypt all ePHI at rest using AES-256 or equivalent. No longer an addressable
+      specification — mandatory under the 2025 NPRM for all covered entities.
+    check_module: encryption
+    check_method: check_encryption_rest
+    severity: Critical
+    frequency: continuous
+    freshness_decay_days: 30
+    evidence_required: "Disk encryption status (BitLocker/FileVault/LUKS), database TDE config, cloud storage encryption"
+    remediation_guidance: >
+      Enable full-disk encryption on all endpoints and servers storing ePHI.
+      Configure Transparent Data Encryption (TDE) for databases. Enable
+      server-side encryption for cloud storage. Use AES-256 minimum.
+
+  - id: CC-MFA-001
+    cfr_reference: "45 CFR § 164.312(d)(2)"
+    category: Cross-Cutting
+    title: "Multi-Factor Authentication — Universal Mandatory"
+    description: >
+      MFA is mandatory for ALL systems accessing ePHI. No exceptions permitted
+      under the 2025 rule. Applies to all workforce members and remote access.
+    check_module: mfa
+    check_method: check_universal_mfa
+    severity: Critical
+    frequency: continuous
+    freshness_decay_days: 30
+    evidence_required: "MFA enforcement policies, user enrollment rates, conditional access configs"
+    remediation_guidance: >
+      Enforce MFA for all systems and users accessing ePHI. Configure identity
+      provider policies to require MFA without exception. Monitor enrollment
+      and address any gaps immediately.
+
+  - id: CC-NS-001
+    cfr_reference: "45 CFR § 164.312(a)(2)(vi)"
+    category: Cross-Cutting
+    title: "Network Segmentation — Microsegmentation"
+    description: >
+      Implement network segmentation to prevent unauthorized lateral movement
+      between ePHI systems and general network. Microsegmentation mandatory.
+    check_module: network_segmentation
+    check_method: check_network_segmentation
+    severity: Critical
+    frequency: semi-annual
+    freshness_decay_days: 180
+    evidence_required: "Network topology, VLAN/firewall configs, segmentation test results"
+    remediation_guidance: >
+      Implement VLAN-based network segmentation isolating ePHI systems. Configure
+      firewall rules blocking lateral movement. Test segmentation effectiveness
+      regularly. Document network topology and data flows.
+
+  - id: CC-VS-001
+    cfr_reference: "45 CFR § 164.308(a)(1)(ii)(A)"
+    category: Cross-Cutting
+    title: "Vulnerability Scanning — Semi-Annual Automated"
+    description: >
+      Conduct automated vulnerability scans at least every 6 months. Verify
+      scanner effectiveness annually. Remediate critical findings within SLA.
+    check_module: vulnerability_scanning
+    check_method: check_scan_compliance
+    severity: High
+    frequency: semi-annual
+    freshness_decay_days: 180
+    evidence_required: "Scan reports from last 180 days, remediation tracking, scanner validation"
+    remediation_guidance: >
+      Deploy automated vulnerability scanning covering all ePHI-handling systems.
+      Schedule scans at least every 6 months. Track and remediate findings per
+      severity SLAs. Validate scanner effectiveness annually.
+
+  - id: CC-PT-001
+    cfr_reference: "45 CFR § 164.308(a)(8)"
+    category: Cross-Cutting
+    title: "Penetration Testing — Annual Requirement"
+    description: >
+      Conduct penetration testing at least annually by a qualified person.
+      Test must cover network and application layers of ePHI systems.
+    check_module: penetration_testing
+    check_method: check_pentest_compliance
+    severity: High
+    frequency: annual
+    freshness_decay_days: 365
+    evidence_required: "Penetration test report within 365 days, tester qualifications, remediation status"
+    remediation_guidance: >
+      Engage a qualified penetration tester to conduct annual testing of ePHI
+      systems. Ensure testing covers network infrastructure, applications, and
+      social engineering vectors. Remediate findings per severity.
+
+  - id: CC-TAI-001
+    cfr_reference: "45 CFR § 164.310(d)(2)(iii)"
+    category: Cross-Cutting
+    title: "Technology Asset Inventory"
+    description: >
+      Maintain a complete inventory of all technology assets that create, receive,
+      maintain, or transmit ePHI. Update at least annually.
+    check_module: asset_inventory
+    check_method: check_asset_inventory
+    severity: High
+    frequency: annual
+    freshness_decay_days: 365
+    evidence_required: "Complete asset inventory with ePHI classification, last update within 12 months"
+    remediation_guidance: >
+      Create and maintain a comprehensive inventory of all hardware, software,
+      and cloud services handling ePHI. Include device types, locations, owners,
+      and ePHI classification. Review and update annually.
+
+  - id: CC-NM-001
+    cfr_reference: "45 CFR § 164.312(e)(1)"
+    category: Cross-Cutting
+    title: "Network Map — ePHI Data Flow"
+    description: >
+      Maintain a current network map showing how ePHI moves through systems,
+      including all entry/exit points and storage locations.
+    check_module: asset_inventory
+    check_method: check_network_map
+    severity: High
+    frequency: annual
+    freshness_decay_days: 365
+    evidence_required: "Network diagram showing ePHI data flows, entry/exit points, storage locations"
+    remediation_guidance: >
+      Create a network diagram documenting all ePHI data flows. Map entry points,
+      processing systems, storage locations, and exit points. Update when the
+      environment changes or at least annually.
+
+  - id: CC-ACA-001
+    cfr_reference: "45 CFR § 164.308(a)(8)"
+    category: Cross-Cutting
+    title: "Annual Compliance Audit"
+    description: >
+      Conduct a full Security Rule compliance audit every 12 months covering
+      all administrative, physical, and technical safeguards.
+    check_module: policy_documentation
+    check_method: check_compliance_audit
+    severity: High
+    frequency: annual
+    freshness_decay_days: 365
+    evidence_required: "Annual compliance audit report with date, scope, and findings"
+    remediation_guidance: >
+      Schedule and conduct a comprehensive compliance audit covering all HIPAA
+      Security Rule requirements. Document all findings with remediation plans
+      and timelines.
+
+  - id: CC-72H-001
+    cfr_reference: "45 CFR § 164.308(a)(7)(ii)(B)"
+    category: Cross-Cutting
+    title: "72-Hour System Restoration"
+    description: >
+      Disaster recovery plan must ensure restoration of critical systems
+      within 72 hours. DR plan must be tested to verify this capability.
+    check_module: backup_recovery
+    check_method: check_dr_capability
+    severity: Critical
+    frequency: annual
+    freshness_decay_days: 365
+    evidence_required: "DR plan documenting 72-hour RTO, last DR test results with actual restoration time"
+    remediation_guidance: >
+      Develop and maintain a disaster recovery plan with documented 72-hour
+      RTO for critical ePHI systems. Test the plan regularly to verify
+      restoration capability meets the timeline requirement.
+
+  - id: CC-BAN-001
+    cfr_reference: "45 CFR § 164.308(b)(3)"
+    category: Cross-Cutting
+    title: "24-Hour BA Contingency Notification"
+    description: >
+      Business associates must notify the covered entity within 24 hours of
+      activating their contingency plan. BAAs must include this requirement.
+    check_module: ba_management
+    check_method: check_ba_notification
+    severity: High
+    frequency: annual
+    freshness_decay_days: 365
+    evidence_required: "BAA clauses requiring 24-hour notification, BA notification procedures"
+    remediation_guidance: >
+      Update all BAAs to include 24-hour contingency notification requirements.
+      Establish procedures for receiving and acting on BA contingency notifications.
+
+  - id: CC-BAV-001
+    cfr_reference: "45 CFR § 164.308(b)(4)"
+    category: Cross-Cutting
+    title: "Annual BA Verification"
+    description: >
+      Obtain written verification from each business associate annually
+      confirming deployment of required technical safeguards, certified by SME.
+    check_module: ba_management
+    check_method: check_ba_verification
+    severity: High
+    frequency: annual
+    freshness_decay_days: 365
+    evidence_required: "Annual BA verification letters, SME certification, safeguard documentation"
+    remediation_guidance: >
+      Implement an annual BA verification process. Request written confirmation
+      of technical safeguard deployment from each BA. Require certification by
+      a subject matter expert. Track verification status for all BAs.
+
+  - id: CC-1HR-001
+    cfr_reference: "45 CFR § 164.308(a)(3)(ii)(C)"
+    category: Cross-Cutting
+    title: "1-Hour Access Termination"
+    description: >
+      Workforce member access to ePHI systems must be terminated within 1 hour
+      of employment termination. Procedures must be documented and tested.
+    check_module: workforce_security
+    check_method: check_access_termination
+    severity: Critical
+    frequency: semi-annual
+    freshness_decay_days: 180
+    evidence_required: "Termination procedures documenting 1-hour SLA, termination logs, test results"
+    remediation_guidance: >
+      Implement automated access termination procedures achieving 1-hour SLA.
+      Document the offboarding workflow. Test the procedure regularly and
+      maintain logs of actual termination times for audit evidence.
+
+  - id: CC-DOC-001
+    cfr_reference: "45 CFR § 164.316"
+    category: Cross-Cutting
+    title: "Written Documentation & 6-Year Retention"
+    description: >
+      All policies, procedures, plans, risk analyses, and compliance documentation
+      must be in writing and retained for a minimum of 6 years.
+    check_module: policy_documentation
+    check_method: check_documentation
+    severity: High
+    frequency: annual
+    freshness_decay_days: 365
+    evidence_required: "Policy inventory with review dates, retention compliance verification"
+    remediation_guidance: >
+      Ensure all required HIPAA documentation is formalized in writing. Implement
+      a document management system with version control. Configure retention
+      policies to maintain documents for at least 6 years.
+
+  - id: CC-PM-001
+    cfr_reference: "45 CFR § 164.308(a)(1)(ii)(B)"
+    category: Cross-Cutting
+    title: "Patch Management & Remediation"
+    description: >
+      Implement patch management procedures ensuring critical patches are applied
+      within defined SLAs. Track remediation status for all systems.
+    check_module: patch_management
+    check_method: check_patch_compliance
+    severity: High
+    frequency: continuous
+    freshness_decay_days: 30
+    evidence_required: "Patch status reports, SLA compliance metrics, remediation tracking"
+    remediation_guidance: >
+      Establish a patch management program with defined SLAs (critical: 14 days,
+      high: 30 days, medium: 90 days). Automate patch deployment where possible.
+      Track compliance and report on SLA adherence.

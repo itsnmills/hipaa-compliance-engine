@@ -1,0 +1,43 @@
+{
+  "endpoints": [
+    {"hostname": "ehr-server-01", "os": "Windows Server 2022", "encrypted": true, "method": "BitLocker", "algorithm": "AES-256"},
+    {"hostname": "db-server-01", "os": "Ubuntu 22.04", "encrypted": true, "method": "LUKS", "algorithm": "AES-256"},
+    {"hostname": "img-server-01", "os": "Windows Server 2022", "encrypted": true, "method": "BitLocker", "algorithm": "AES-256"},
+    {"hostname": "file-server-01", "os": "Windows Server 2022", "encrypted": true, "method": "BitLocker", "algorithm": "AES-256"},
+    {"hostname": "web-server-01", "os": "Ubuntu 22.04", "encrypted": true, "method": "LUKS", "algorithm": "AES-256"},
+    {"hostname": "front-desk-01", "os": "Windows 11", "encrypted": true, "method": "BitLocker", "algorithm": "AES-256"},
+    {"hostname": "front-desk-02", "os": "Windows 11", "encrypted": true, "method": "BitLocker", "algorithm": "AES-256"},
+    {"hostname": "clinical-ws-01", "os": "Windows 11", "encrypted": true, "method": "BitLocker", "algorithm": "AES-256"},
+    {"hostname": "clinical-ws-02", "os": "Windows 11", "encrypted": true, "method": "BitLocker", "algorithm": "AES-256"},
+    {"hostname": "clinical-ws-03", "os": "Windows 11", "encrypted": false, "recommended_solution": "BitLocker"},
+    {"hostname": "admin-ws-01", "os": "macOS 14", "encrypted": true, "method": "FileVault", "algorithm": "AES-256"},
+    {"hostname": "dr-laptop-01", "os": "Windows 11", "encrypted": true, "method": "BitLocker", "algorithm": "AES-256"},
+    {"hostname": "dr-laptop-02", "os": "macOS 14", "encrypted": true, "method": "FileVault", "algorithm": "AES-256"}
+  ],
+  "databases": [
+    {"name": "ehr_production", "type": "SQL Server", "tde_enabled": true, "algorithm": "AES-256"},
+    {"name": "imaging_archive", "type": "PostgreSQL", "tde_enabled": true, "algorithm": "AES-256"}
+  ],
+  "cloud_storage": [
+    {"provider": "Azure Blob", "bucket": "patient-records", "encrypted": true, "method": "SSE-AES256"},
+    {"provider": "Azure Blob", "bucket": "backups", "encrypted": true, "method": "SSE-AES256"}
+  ],
+  "algorithm": "AES-256",
+  "tls_configurations": [
+    {"service": "EHR Web Portal", "tls_version": "1.3", "cipher_suite": "TLS_AES_256_GCM_SHA384"},
+    {"service": "Patient Portal", "tls_version": "1.2", "cipher_suite": "ECDHE-RSA-AES256-GCM-SHA384"},
+    {"service": "SMTP (Email)", "tls_version": "1.2", "cipher_suite": "ECDHE-RSA-AES256-GCM-SHA384"},
+    {"service": "VPN Gateway", "tls_version": "1.3", "cipher_suite": "TLS_AES_256_GCM_SHA384"},
+    {"service": "SIEM Dashboard", "tls_version": "1.2", "cipher_suite": "ECDHE-RSA-AES256-GCM-SHA384"}
+  ],
+  "certificates": [
+    {"domain": "portal.midwestfamilydental.com", "issuer": "Let's Encrypt", "expiry_date": "2026-08-15", "expired": false},
+    {"domain": "ehr.midwestfamilydental.com", "issuer": "DigiCert", "expiry_date": "2026-12-01", "expired": false},
+    {"domain": "vpn.midwestfamilydental.com", "issuer": "Let's Encrypt", "expiry_date": "2026-06-20", "expired": false}
+  ],
+  "integrity_controls": {
+    "checksums_enabled": true,
+    "backup_verification": true,
+    "database_constraints": true
+  }
+}

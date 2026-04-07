@@ -1,0 +1,96 @@
+{
+  "risk_analysis": {
+    "exists": true,
+    "last_update": "2025-06-15",
+    "comprehensive": true,
+    "signed_by": "Dr. Sarah Mitchell",
+    "systems_covered": 19,
+    "risks_identified": 34,
+    "version": "3.0"
+  },
+  "risk_management": {
+    "plan_exists": true,
+    "last_update": "2025-06-15",
+    "mitigation_tracking": true,
+    "risks_mitigated": 28,
+    "risks_accepted": 4,
+    "risks_open": 2
+  },
+  "security_officer": {
+    "designated": true,
+    "documented": true,
+    "name": "Karen Thompson",
+    "title": "Office Manager / HIPAA Security Officer",
+    "designation_date": "2020-01-15",
+    "responsibilities_documented": true
+  },
+  "annual_audit": {
+    "conducted": true,
+    "last_date": "2025-06-15",
+    "auditor": "VerifAI Security",
+    "scope": "Full Security Rule assessment",
+    "findings": 12,
+    "remediated": 9,
+    "in_progress": 3
+  },
+  "compliance_audit": {
+    "conducted": true,
+    "last_date": "2025-06-15",
+    "scope": "Full HIPAA Security Rule compliance evaluation"
+  },
+  "facility_security": {
+    "plan_exists": true,
+    "badge_access": true,
+    "server_room_locked": true,
+    "visitor_logs": true,
+    "cctv": false,
+    "last_review": "2025-06-15"
+  },
+  "workstation_policy": {
+    "use_policy": true,
+    "clean_desk": true,
+    "auto_lock": true,
+    "auto_lock_minutes": 10,
+    "privacy_screens": false,
+    "cable_locks": false
+  },
+  "policies": [
+    {"name": "HIPAA Security Policy", "exists": true, "last_review": "2025-06-15", "review_overdue": false},
+    {"name": "Access Control Policy", "exists": true, "last_review": "2025-06-15", "review_overdue": false},
+    {"name": "Encryption Policy", "exists": true, "last_review": "2025-06-15", "review_overdue": false},
+    {"name": "Incident Response Plan", "exists": true, "last_review": "2025-08-15", "review_overdue": false},
+    {"name": "Disaster Recovery Plan", "exists": true, "last_review": "2025-11-01", "review_overdue": false},
+    {"name": "Backup Policy", "exists": true, "last_review": "2025-06-15", "review_overdue": false},
+    {"name": "Workforce Security Policy", "exists": true, "last_review": "2025-06-15", "review_overdue": false},
+    {"name": "Business Associate Policy", "exists": true, "last_review": "2025-06-15", "review_overdue": false},
+    {"name": "Patch Management Policy", "exists": true, "last_review": "2024-06-10", "review_overdue": true},
+    {"name": "Audit Log Review Policy", "exists": true, "last_review": "2025-06-15", "review_overdue": false},
+    {"name": "Network Security Policy", "exists": true, "last_review": "2025-06-15", "review_overdue": false},
+    {"name": "Mobile Device Policy", "exists": true, "last_review": "2024-03-20", "review_overdue": true},
+    {"name": "Data Retention Policy", "exists": true, "last_review": "2025-06-15", "review_overdue": false},
+    {"name": "Breach Notification Policy", "exists": true, "last_review": "2025-06-15", "review_overdue": false}
+  ],
+  "required_policies": [
+    "HIPAA Security Policy",
+    "Access Control Policy",
+    "Encryption Policy",
+    "Incident Response Plan",
+    "Disaster Recovery Plan",
+    "Backup Policy",
+    "Workforce Security Policy",
+    "Business Associate Policy",
+    "Patch Management Policy",
+    "Audit Log Review Policy",
+    "Network Security Policy",
+    "Mobile Device Policy",
+    "Data Retention Policy",
+    "Breach Notification Policy",
+    "Physical Security Policy",
+    "Sanction Policy"
+  ],
+  "retention": {
+    "6yr_compliant": true,
+    "retention_system": "SharePoint with retention labels",
+    "oldest_document_years": 8
+  }
+}

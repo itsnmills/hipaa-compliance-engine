@@ -1,0 +1,76 @@
+{
+  "business_associates": [
+    {
+      "name": "ClearView Cloud Hosting",
+      "service": "Cloud infrastructure hosting for patient portal",
+      "baa_status": "current",
+      "baa_execution_date": "2024-03-15",
+      "baa_expiry_date": "2027-03-15",
+      "annual_verification": true,
+      "verification_date": "2025-12-10",
+      "notification_24hr_clause": true,
+      "sme_certification": true,
+      "risk_tier": "High"
+    },
+    {
+      "name": "MedBill Pro Services",
+      "service": "Medical billing and claims processing",
+      "baa_status": "current",
+      "baa_execution_date": "2023-06-01",
+      "baa_expiry_date": "2026-06-01",
+      "annual_verification": true,
+      "verification_date": "2025-11-20",
+      "notification_24hr_clause": true,
+      "sme_certification": true,
+      "risk_tier": "High"
+    },
+    {
+      "name": "SecureShred Document Destruction",
+      "service": "Secure document and media destruction",
+      "baa_status": "current",
+      "baa_execution_date": "2024-01-10",
+      "baa_expiry_date": "2027-01-10",
+      "annual_verification": true,
+      "verification_date": "2025-10-05",
+      "notification_24hr_clause": false,
+      "sme_certification": false,
+      "risk_tier": "Low"
+    },
+    {
+      "name": "DentalXchange EDI",
+      "service": "Electronic claims submission and remittance",
+      "baa_status": "current",
+      "baa_execution_date": "2023-09-20",
+      "baa_expiry_date": "2026-09-20",
+      "annual_verification": false,
+      "verification_date": null,
+      "notification_24hr_clause": false,
+      "sme_certification": false,
+      "risk_tier": "Medium"
+    },
+    {
+      "name": "LabConnect Dental Lab",
+      "service": "Dental lab services (receives patient names and case details)",
+      "baa_status": "expired",
+      "baa_execution_date": "2022-04-01",
+      "baa_expiry_date": "2025-04-01",
+      "annual_verification": false,
+      "verification_date": null,
+      "notification_24hr_clause": false,
+      "sme_certification": false,
+      "risk_tier": "Medium"
+    },
+    {
+      "name": "VerifAI Security (MSP)",
+      "service": "Managed IT services, security monitoring, compliance support",
+      "baa_status": "current",
+      "baa_execution_date": "2024-07-01",
+      "baa_expiry_date": "2027-07-01",
+      "annual_verification": true,
+      "verification_date": "2026-01-15",
+      "notification_24hr_clause": true,
+      "sme_certification": true,
+      "risk_tier": "Critical"
+    }
+  ]
+}

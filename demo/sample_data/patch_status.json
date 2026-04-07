@@ -1,0 +1,121 @@
+{
+  "sla_policy": {
+    "documented": true,
+    "critical_days": 14,
+    "high_days": 30,
+    "medium_days": 90,
+    "low_days": 180
+  },
+  "systems": [
+    {
+      "hostname": "ehr-server-01",
+      "os": "Windows Server 2022",
+      "last_scan": "2026-04-01",
+      "patches_applied_30d": 8,
+      "pending_patches": [
+        {"name": "KB5035857", "severity": "High", "days_pending": 22, "cve": "CVE-2025-21418"},
+        {"name": "KB5035900", "severity": "Medium", "days_pending": 15, "cve": "CVE-2025-21390"}
+      ]
+    },
+    {
+      "hostname": "db-server-01",
+      "os": "Ubuntu 22.04",
+      "last_scan": "2026-04-01",
+      "patches_applied_30d": 12,
+      "pending_patches": []
+    },
+    {
+      "hostname": "img-server-01",
+      "os": "Windows Server 2022",
+      "last_scan": "2026-04-01",
+      "patches_applied_30d": 6,
+      "pending_patches": [
+        {"name": "KB5035857", "severity": "High", "days_pending": 22, "cve": "CVE-2025-21418"}
+      ]
+    },
+    {
+      "hostname": "file-server-01",
+      "os": "Windows Server 2022",
+      "last_scan": "2026-04-01",
+      "patches_applied_30d": 7,
+      "pending_patches": [
+        {"name": "KB5034763", "severity": "Critical", "days_pending": 51, "cve": "CVE-2025-21391"},
+        {"name": "KB5035857", "severity": "High", "days_pending": 22, "cve": "CVE-2025-21418"}
+      ]
+    },
+    {
+      "hostname": "web-server-01",
+      "os": "Ubuntu 22.04",
+      "last_scan": "2026-04-01",
+      "patches_applied_30d": 15,
+      "pending_patches": [
+        {"name": "tomcat-11.0.2", "severity": "High", "days_pending": 35, "cve": "CVE-2024-50379"}
+      ]
+    },
+    {
+      "hostname": "front-desk-01",
+      "os": "Windows 11",
+      "last_scan": "2026-04-01",
+      "patches_applied_30d": 4,
+      "pending_patches": [
+        {"name": "7-Zip 24.09", "severity": "High", "days_pending": 51, "cve": "CVE-2025-0411"}
+      ]
+    },
+    {
+      "hostname": "front-desk-02",
+      "os": "Windows 11",
+      "last_scan": "2026-04-01",
+      "patches_applied_30d": 5,
+      "pending_patches": []
+    },
+    {
+      "hostname": "clinical-ws-01",
+      "os": "Windows 11",
+      "last_scan": "2026-04-01",
+      "patches_applied_30d": 5,
+      "pending_patches": []
+    },
+    {
+      "hostname": "clinical-ws-02",
+      "os": "Windows 11",
+      "last_scan": "2026-04-01",
+      "patches_applied_30d": 4,
+      "pending_patches": [
+        {"name": "TeamViewer Update", "severity": "Medium", "days_pending": 20, "cve": "CVE-2025-0065"}
+      ]
+    },
+    {
+      "hostname": "clinical-ws-03",
+      "os": "Windows 11",
+      "last_scan": "2026-03-15",
+      "patches_applied_30d": 0,
+      "pending_patches": [
+        {"name": "KB5034763", "severity": "Critical", "days_pending": 55, "cve": "CVE-2025-21391"},
+        {"name": "KB5035857", "severity": "High", "days_pending": 22, "cve": "CVE-2025-21418"}
+      ]
+    },
+    {
+      "hostname": "admin-ws-01",
+      "os": "macOS 14",
+      "last_scan": "2026-04-01",
+      "patches_applied_30d": 2,
+      "pending_patches": [
+        {"name": "macOS 15.3", "severity": "Medium", "days_pending": 30, "cve": "CVE-2025-24085"}
+      ]
+    },
+    {
+      "hostname": "dr-laptop-01",
+      "os": "Windows 11",
+      "last_scan": "2026-04-01",
+      "patches_applied_30d": 6,
+      "pending_patches": []
+    },
+    {
+      "hostname": "dr-laptop-02",
+      "os": "macOS 14",
+      "last_scan": "2026-04-01",
+      "patches_applied_30d": 2,
+      "pending_patches": []
+    }
+  ]
+}

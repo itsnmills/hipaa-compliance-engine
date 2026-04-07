@@ -1,0 +1,74 @@
+---
+# HIPAA Compliance Engine — Production Configuration
+# Customize for your organization's environment
+
+organization:
+  name: "Your Healthcare Organization"
+  type: "covered_entity"
+  size: "small"
+
+environment:
+  identity_providers:
+    - type: azure_ad
+      tenant_id: "your-tenant-id"
+      check_method: api
+
+  servers:
+    - hostname: ehr-server-01
+      os: windows_server_2022
+      role: ehr_system
+      ephi: true
+    - hostname: db-server-01
+      os: ubuntu_22
+      role: database
+      ephi: true
+
+  network:
+    firewall_type: pfsense
+    segments:
+      - name: clinical
+        vlan: 100
+        ephi: true
+      - name: guest
+        vlan: 200
+        ephi: false
+
+  vulnerability_scanner:
+    type: nessus
+    results_path: "/path/to/scan/results"
+
+  backup:
+    type: veeam
+    schedule: daily
+    retention_days: 90
+
+  siem:
+    type: wazuh
+    endpoint: "https://siem.example.com"
+
+evidence:
+  policies_dir: "/path/to/policies"
+  training_records: "/path/to/training"
+  ba_agreements: "/path/to/baa"
+  asset_inventory: "/path/to/inventory"
+  ir_plan: "/path/to/ir-plan"
+  pentest_reports: "/path/to/pentests"
+  network_diagrams: "/path/to/network-maps"
+
+alerts:
+  freshness_warning_threshold: 0.25
+  email_notifications: false
+  slack_webhook: null
+
+scoring:
+  category_weights:
+    Technical: 0.35
+    Administrative: 0.30
+    Cross-Cutting: 0.25
+    Physical: 0.10
+
+report:
+  brand_color: "#1E40AF"
+  logo_text: "VerifAI Security"
+  tool_name: "VerifAI Security — HIPAA Compliance Engine"
+  version: "1.0.0"

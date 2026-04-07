@@ -1,0 +1,47 @@
+{
+  "workforce_members": [
+    {"name": "Dr. Sarah Mitchell", "role": "Dentist/Owner", "hire_date": "2015-03-01", "training_status": "current", "last_training": "2025-11-15", "access_level": "full"},
+    {"name": "Dr. James Patel", "role": "Dentist", "hire_date": "2019-08-15", "training_status": "current", "last_training": "2025-11-15", "access_level": "full"},
+    {"name": "Karen Thompson", "role": "Office Manager", "hire_date": "2016-06-01", "training_status": "current", "last_training": "2025-11-15", "access_level": "admin"},
+    {"name": "Lisa Chen", "role": "Dental Hygienist", "hire_date": "2018-02-20", "training_status": "current", "last_training": "2025-11-15", "access_level": "clinical"},
+    {"name": "Maria Rodriguez", "role": "Dental Hygienist", "hire_date": "2020-01-10", "training_status": "current", "last_training": "2025-11-15", "access_level": "clinical"},
+    {"name": "David Kim", "role": "Dental Assistant", "hire_date": "2021-05-15", "training_status": "current", "last_training": "2025-11-15", "access_level": "clinical"},
+    {"name": "Jennifer Walsh", "role": "Dental Assistant", "hire_date": "2022-03-01", "training_status": "current", "last_training": "2025-11-15", "access_level": "clinical"},
+    {"name": "Robert Brown", "role": "Dental Assistant", "hire_date": "2023-09-10", "training_status": "expired", "last_training": "2024-11-20", "access_level": "clinical"},
+    {"name": "Amanda Foster", "role": "Receptionist", "hire_date": "2020-07-15", "training_status": "current", "last_training": "2025-11-15", "access_level": "front_desk"},
+    {"name": "Michelle Davis", "role": "Receptionist", "hire_date": "2024-01-08", "training_status": "expired", "last_training": "2024-12-01", "access_level": "front_desk"},
+    {"name": "Steven Park", "role": "Billing Specialist", "hire_date": "2019-11-01", "training_status": "current", "last_training": "2025-11-15", "access_level": "billing"},
+    {"name": "Rachel Green", "role": "Insurance Coordinator", "hire_date": "2021-04-15", "training_status": "current", "last_training": "2025-11-15", "access_level": "billing"},
+    {"name": "Christopher Lee", "role": "IT Support (MSP)", "hire_date": "2024-07-01", "training_status": "current", "last_training": "2026-01-10", "access_level": "admin"},
+    {"name": "Nicole Anderson", "role": "Dental Hygienist", "hire_date": "2023-06-01", "training_status": "current", "last_training": "2025-11-15", "access_level": "clinical"},
+    {"name": "Brian Taylor", "role": "Lab Technician", "hire_date": "2022-10-01", "training_status": "current", "last_training": "2025-11-15", "access_level": "limited"},
+    {"name": "Susan Martinez", "role": "Patient Coordinator", "hire_date": "2024-05-15", "training_status": "current", "last_training": "2025-11-15", "access_level": "front_desk"},
+    {"name": "Temp Hygienist 01", "role": "Temp Dental Hygienist", "hire_date": "2026-01-15", "training_status": "current", "last_training": "2026-01-20", "access_level": "clinical"},
+    {"name": "Temp Hygienist 02", "role": "Temp Dental Hygienist", "hire_date": "2026-03-10", "training_status": "never_completed", "last_training": null, "access_level": "clinical"}
+  ],
+  "termination_procedures": {
+    "documented": true,
+    "sla_1hr_capable": false,
+    "automated": false,
+    "manual_steps": [
+      "HR notifies IT (MSP) via ticketing system",
+      "MSP disables AD account",
+      "MSP disables Google Workspace account",
+      "Office Manager collects badge and keys",
+      "MSP removes from MFA enrollment"
+    ],
+    "average_termination_minutes": 95,
+    "note": "Current manual process averages 95 minutes — does not meet 1-hour SLA"
+  },
+  "recent_terminations": [
+    {"employee": "Former Employee 1", "date": "2026-01-30", "termination_time_minutes": 45},
+    {"employee": "Former Employee 2", "date": "2025-10-15", "termination_time_minutes": 120},
+    {"employee": "Former Employee 3", "date": "2025-08-22", "termination_time_minutes": 90}
+  ],
+  "authorization": {
+    "clearance_procedures": true,
+    "supervision_policy": true,
+    "background_checks": true,
+    "access_authorization_documented": true
+  }
+}

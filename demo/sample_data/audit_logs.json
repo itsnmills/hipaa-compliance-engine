@@ -1,0 +1,41 @@
+{
+  "siem": {
+    "type": "Wazuh",
+    "version": "4.7",
+    "active": true,
+    "endpoint": "https://siem.midwestfamilydental.local",
+    "agents_deployed": 15,
+    "agents_active": 14
+  },
+  "log_sources": [
+    {"name": "ehr-server-01", "type": "Windows Event Log", "status": "active", "events_24h": 12450},
+    {"name": "db-server-01", "type": "Syslog + PostgreSQL Audit", "status": "active", "events_24h": 8920},
+    {"name": "img-server-01", "type": "Windows Event Log", "status": "active", "events_24h": 3200},
+    {"name": "file-server-01", "type": "Windows Event Log", "status": "active", "events_24h": 5670},
+    {"name": "web-server-01", "type": "Syslog + Apache Access Log", "status": "active", "events_24h": 15800},
+    {"name": "pfsense-fw-01", "type": "Syslog (Firewall)", "status": "active", "events_24h": 45000},
+    {"name": "front-desk-01", "type": "Wazuh Agent", "status": "active", "events_24h": 890},
+    {"name": "front-desk-02", "type": "Wazuh Agent", "status": "active", "events_24h": 750},
+    {"name": "clinical-ws-01", "type": "Wazuh Agent", "status": "active", "events_24h": 1200},
+    {"name": "clinical-ws-02", "type": "Wazuh Agent", "status": "active", "events_24h": 980},
+    {"name": "clinical-ws-03", "type": "Wazuh Agent", "status": "inactive", "events_24h": 0, "note": "Agent not responding since 2026-03-20"},
+    {"name": "admin-ws-01", "type": "Wazuh Agent", "status": "active", "events_24h": 1500},
+    {"name": "dr-laptop-01", "type": "Wazuh Agent", "status": "active", "events_24h": 670},
+    {"name": "dr-laptop-02", "type": "Wazuh Agent", "status": "active", "events_24h": 540},
+    {"name": "azure-ad-audit", "type": "Azure AD Audit Logs", "status": "active", "events_24h": 320}
+  ],
+  "retention": {
+    "days": 2190,
+    "storage_used_gb": 450,
+    "storage_total_gb": 1000,
+    "compliant": true
+  },
+  "review_procedures": {
+    "regular_reviews": true,
+    "review_frequency": "weekly",
+    "last_review": "2026-03-31",
+    "reviewer": "Christopher Lee (MSP)",
+    "automated_alerts": true,
+    "alert_rules": 45
+  }
+}

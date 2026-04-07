@@ -1,0 +1,76 @@
+{
+  "identity_providers": [
+    {
+      "type": "azure_ad",
+      "tenant_id": "demo-tenant-mfd-001",
+      "mfa_enforced": true,
+      "users_total": 18,
+      "users_mfa_enrolled": 17
+    },
+    {
+      "type": "google_workspace",
+      "domain": "midwestfamilydental.com",
+      "mfa_enforced": true,
+      "users_total": 18,
+      "users_mfa_enrolled": 16
+    }
+  ],
+  "total_users": 18,
+  "mfa_enrolled": 17,
+  "mfa_exceptions": [
+    {
+      "user": "temp-hygienist-02",
+      "reason": "Temporary contractor — pending enrollment",
+      "exception_date": "2026-03-15",
+      "approved_by": "Dr. Sarah Mitchell"
+    }
+  ],
+  "conditional_access_policies": [
+    {
+      "name": "Require MFA for EHR Access",
+      "target": "all_users",
+      "requires_mfa": true,
+      "enabled": true
+    },
+    {
+      "name": "Require MFA for Remote Access",
+      "target": "remote_users",
+      "requires_mfa": true,
+      "enabled": true
+    },
+    {
+      "name": "Block Legacy Auth",
+      "target": "all_users",
+      "requires_mfa": false,
+      "blocks_legacy": true,
+      "enabled": true
+    }
+  ],
+  "users": [
+    {"name": "Dr. Sarah Mitchell", "role": "Dentist/Owner", "mfa_enrolled": true},
+    {"name": "Dr. James Patel", "role": "Dentist", "mfa_enrolled": true},
+    {"name": "Karen Thompson", "role": "Office Manager", "mfa_enrolled": true},
+    {"name": "Lisa Chen", "role": "Dental Hygienist", "mfa_enrolled": true},
+    {"name": "Maria Rodriguez", "role": "Dental Hygienist", "mfa_enrolled": true},
+    {"name": "David Kim", "role": "Dental Assistant", "mfa_enrolled": true},
+    {"name": "Jennifer Walsh", "role": "Dental Assistant", "mfa_enrolled": true},
+    {"name": "Robert Brown", "role": "Dental Assistant", "mfa_enrolled": true},
+    {"name": "Amanda Foster", "role": "Receptionist", "mfa_enrolled": true},
+    {"name": "Michelle Davis", "role": "Receptionist", "mfa_enrolled": true},
+    {"name": "Steven Park", "role": "Billing Specialist", "mfa_enrolled": true},
+    {"name": "Rachel Green", "role": "Insurance Coordinator", "mfa_enrolled": true},
+    {"name": "Christopher Lee", "role": "IT Support (MSP)", "mfa_enrolled": true},
+    {"name": "Temp Hygienist 01", "role": "Temp Dental Hygienist", "mfa_enrolled": true},
+    {"name": "Temp Hygienist 02", "role": "Temp Dental Hygienist", "mfa_enrolled": false},
+    {"name": "Nicole Anderson", "role": "Dental Hygienist", "mfa_enrolled": true},
+    {"name": "Brian Taylor", "role": "Lab Technician", "mfa_enrolled": true},
+    {"name": "Susan Martinez", "role": "Patient Coordinator", "mfa_enrolled": true}
+  ],
+  "shared_accounts": [],
+  "rbac_configured": true,
+  "auto_logoff_enabled": true,
+  "authorization_policy_exists": true,
+  "access_reviews": [
+    {"date": "2025-09-15", "reviewer": "Karen Thompson", "findings": 2}
+  ]
+}

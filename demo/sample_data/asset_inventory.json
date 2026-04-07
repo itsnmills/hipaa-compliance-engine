@@ -1,0 +1,39 @@
+{
+  "last_update": "2025-10-15",
+  "categories_covered": ["Servers", "Workstations", "Network Equipment", "Medical Devices", "Cloud Services"],
+  "assets": [
+    {"hostname": "ehr-server-01", "type": "Server", "os": "Windows Server 2022", "role": "EHR System (Open Dental)", "ephi": true, "ephi_classified": true, "location": "Server Room", "owner": "IT (MSP)", "status": "current"},
+    {"hostname": "db-server-01", "type": "Server", "os": "Ubuntu 22.04", "role": "PostgreSQL Database", "ephi": true, "ephi_classified": true, "location": "Server Room", "owner": "IT (MSP)", "status": "current"},
+    {"hostname": "img-server-01", "type": "Server", "os": "Windows Server 2022", "role": "Dental Imaging Archive", "ephi": true, "ephi_classified": true, "location": "Server Room", "owner": "IT (MSP)", "status": "current"},
+    {"hostname": "file-server-01", "type": "Server", "os": "Windows Server 2022", "role": "File Storage", "ephi": true, "ephi_classified": true, "location": "Server Room", "owner": "IT (MSP)", "status": "current"},
+    {"hostname": "web-server-01", "type": "Server", "os": "Ubuntu 22.04", "role": "Patient Portal", "ephi": true, "ephi_classified": true, "location": "Azure Cloud", "owner": "IT (MSP)", "status": "current"},
+    {"hostname": "front-desk-01", "type": "Workstation", "os": "Windows 11", "role": "Reception", "ephi": true, "ephi_classified": true, "location": "Front Desk", "owner": "Office Mgr", "status": "current"},
+    {"hostname": "front-desk-02", "type": "Workstation", "os": "Windows 11", "role": "Reception", "ephi": true, "ephi_classified": true, "location": "Front Desk", "owner": "Office Mgr", "status": "current"},
+    {"hostname": "clinical-ws-01", "type": "Workstation", "os": "Windows 11", "role": "Clinical", "ephi": true, "ephi_classified": true, "location": "Operatory 1", "owner": "Office Mgr", "status": "current"},
+    {"hostname": "clinical-ws-02", "type": "Workstation", "os": "Windows 11", "role": "Clinical", "ephi": true, "ephi_classified": true, "location": "Operatory 2", "owner": "Office Mgr", "status": "current"},
+    {"hostname": "clinical-ws-03", "type": "Workstation", "os": "Windows 11", "role": "Clinical", "ephi": true, "ephi_classified": true, "location": "Operatory 3", "owner": "Office Mgr", "status": "stale"},
+    {"hostname": "admin-ws-01", "type": "Workstation", "os": "macOS 14", "role": "Administration", "ephi": true, "ephi_classified": true, "location": "Office", "owner": "Office Mgr", "status": "current"},
+    {"hostname": "dr-laptop-01", "type": "Laptop", "os": "Windows 11", "role": "Provider", "ephi": true, "ephi_classified": true, "location": "Mobile", "owner": "Dr. Mitchell", "status": "current"},
+    {"hostname": "dr-laptop-02", "type": "Laptop", "os": "macOS 14", "role": "Provider", "ephi": true, "ephi_classified": true, "location": "Mobile", "owner": "Dr. Patel", "status": "current"},
+    {"hostname": "pfsense-fw-01", "type": "Network", "os": "pfSense 2.7", "role": "Firewall/Router", "ephi": false, "ephi_classified": true, "location": "Server Room", "owner": "IT (MSP)", "status": "current"},
+    {"hostname": "switch-core-01", "type": "Network", "os": "Cisco IOS", "role": "Core Switch", "ephi": false, "ephi_classified": true, "location": "Server Room", "owner": "IT (MSP)", "status": "current"},
+    {"hostname": "ap-01", "type": "Network", "os": "UniFi", "role": "WiFi AP - Clinical", "ephi": false, "ephi_classified": false, "location": "Ceiling - Main", "owner": "IT (MSP)", "status": "current"},
+    {"hostname": "ap-02", "type": "Network", "os": "UniFi", "role": "WiFi AP - Waiting Room", "ephi": false, "ephi_classified": false, "location": "Ceiling - Waiting", "owner": "IT (MSP)", "status": "current"},
+    {"hostname": "xray-unit-01", "type": "Medical Device", "os": "Embedded", "role": "Digital X-Ray", "ephi": true, "ephi_classified": true, "location": "X-Ray Room", "owner": "Clinical", "status": "current"},
+    {"hostname": "panoramic-01", "type": "Medical Device", "os": "Embedded", "role": "Panoramic X-Ray", "ephi": true, "ephi_classified": true, "location": "Imaging Room", "owner": "Clinical", "status": "current"}
+  ],
+  "network_map": {
+    "exists": true,
+    "last_update": "2025-10-15",
+    "data_flows_documented": false,
+    "format": "Visio diagram",
+    "location": "SharePoint - IT Documentation"
+  },
+  "media_controls": {
+    "disposal_procedures": true,
+    "disposal_method": "Certificate of destruction via Iron Mountain",
+    "encryption_portable": false,
+    "inventory_tracking": true,
+    "byod_policy": true
+  }
+}
