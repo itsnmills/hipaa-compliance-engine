@@ -1,15 +1,15 @@
-# HIPAA Compliance Engine
+# HIPAA-Oriented Control Evidence Workbench
 
-**VerifAI Security** — Continuous compliance monitoring for the 2025 HIPAA Security Rule
+**VerifAI Security** — Technical control evidence mapping for HIPAA-oriented review preparation
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-A Python-based continuous compliance monitoring engine that **actively verifies technical controls** against every mandatory requirement in the 2025 HIPAA Security Rule NPRM. Unlike questionnaire-based tools, this engine checks MFA enforcement, encryption status, scan schedules, log collection, and more — then tracks compliance freshness over time.
+A Python-based technical control evidence workbench that maps sample checks to HIPAA Security Rule NPRM-oriented review fields. Unlike questionnaire-only demos, this workbench can check MFA evidence, encryption status, scan schedules, log collection, and more — then track evidence freshness over time. It supports evidence review; it does not certify compliance.
 
 ---
 
-### Compliance Dashboard
+### Evidence Dashboard
 
 <p align="center">
   <img src="docs/screenshots/scan_demo.svg" alt="HIPAA Compliance Engine — Demo Scan Dashboard" width="800">
@@ -99,7 +99,7 @@ pip install -r requirements.txt
 ### Demo Mode (No Configuration Required)
 
 ```bash
-# Run a full compliance scan with simulated data
+# Run a full evidence scan with simulated data
 python run_engine.py scan --demo
 
 # Generate the annual compliance audit PDF report
@@ -139,7 +139,7 @@ python run_engine.py scan --category technical
 
 | Command | Description |
 |---------|-------------|
-| `scan [--demo] [--category CAT]` | Run full compliance scan |
+| `scan [--demo] [--category CAT]` | Run full evidence scan |
 | `dashboard [--demo]` | View compliance dashboard |
 | `report [--demo] [--output PATH]` | Generate PDF audit report |
 | `freshness [--demo]` | View freshness status for all controls |
@@ -350,4 +350,4 @@ MIT License — See [LICENSE](LICENSE) for details.
 
 ---
 
-Built by **VerifAI Security** — Protecting healthcare data through continuous compliance monitoring.
+Built by **VerifAI Security** — Supporting healthcare data protection through local technical evidence review.
